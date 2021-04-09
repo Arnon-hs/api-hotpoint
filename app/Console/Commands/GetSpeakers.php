@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Session;
+use App\Models\Speaker;
 use Illuminate\Console\Command;
 use App\Services\ClientService;
 use Illuminate\Support\Facades\DB;
@@ -54,10 +55,9 @@ class GetSpeakers extends Command
             $speakers = $this->clientService->getSpeakers();
             if(empty($speakers))
                 return 'Speakers list is empty';
-
             foreach ($speakers as $speaker) {
-                Session::create([
-                    'speakerid' => $speaker->sessionid,
+                Speaker::create([
+                    'speakerid' => $speaker->speakerid,
                     'questionid' => $speaker->questionid,
                     'speaker_fname' => $speaker->speaker_fname,
                     'speaker_mname' => $speaker->speaker_mname,
@@ -65,7 +65,7 @@ class GetSpeakers extends Command
                     'speaker_image' => $speaker->speaker_image
                 ]);
             }
-            return 'Complete! Speakers list successfully added to Database.' . PHP_EOL;
+            echo 'Complete! Speakers list successfully added to Database.' . PHP_EOL;
         } catch (\Exception $e) {
             return $e->getMessage() . PHP_EOL;
         }

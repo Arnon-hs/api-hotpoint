@@ -23,6 +23,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('refresh', 'AuthController@refresh');
 
     $router->group(['middleware' => 'auth'], function ($router) {
-        $router->get('me', 'AuthController@me')->middleware('auth');
+        $router->get('me', 'AuthController@me');
+        $router->get('speakers', 'SpeakerControllers@all');
     });
 });

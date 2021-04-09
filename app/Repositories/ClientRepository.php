@@ -83,8 +83,8 @@ class ClientRepository
     {
         try{
             $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/speakerlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token);
-            $speakers = json_decode($response->getBody());//->ResultSet
-            dd($speakers);
+            $speakers = json_decode($response->getBody())->ResultSet;//
+//            dd($speakers);
 
         }catch (\Exception $e) {
             $speakers = null;
