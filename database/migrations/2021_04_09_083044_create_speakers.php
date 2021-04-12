@@ -16,10 +16,10 @@ class CreateSpeakers extends Migration
         Schema::create('speakers', function (Blueprint $table) {
             $table->bigInteger('speakerid')->unique();
             $table->bigInteger('questionid');
-            $table->string('speaker_fname');
-            $table->string('speaker_mname');
-            $table->string('speaker_lname');
-            $table->string('speaker_image');
+            $table->string('speaker_fname')->nullable();
+            $table->string('speaker_mname')->nullable();
+            $table->string('speaker_lname')->nullable();
+            $table->string('speaker_image')->nullable();
         });
     }
 

@@ -91,6 +91,10 @@ class ClientService
     {
         try{
             $result = $this->clientRepository->getSpeakers($this->token);
+
+            if(empty($result))
+                throw new InvalidArgumentException('Speakers list is empty');
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable get speakers list');

@@ -50,10 +50,7 @@ class GetSpeakers extends Command
     {
         try {
             DB::table('speakers')->delete();
-
             $speakers = $this->clientService->getSpeakers();
-            if(empty($speakers))
-                return 'Speakers list is empty';
             foreach ($speakers as $speaker) {
                 Speaker::create([
                     'speakerid' => $speaker->speakerid,
@@ -66,7 +63,7 @@ class GetSpeakers extends Command
             }
             echo 'Complete! Speakers list successfully added to Database.' . PHP_EOL;
         } catch (\Exception $e) {
-            return $e->getMessage() . PHP_EOL;
+            echo $e->getMessage() . PHP_EOL;
         }
     }
 }
