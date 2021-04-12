@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Session;
 use App\Models\Speaker;
 use Illuminate\Console\Command;
 use App\Services\ClientService;

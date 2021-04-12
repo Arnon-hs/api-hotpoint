@@ -91,8 +91,6 @@ class ClientService
     {
         try{
             $result = $this->clientRepository->getSpeakers($this->token);
-
-//            dd($result);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable get speakers list');
