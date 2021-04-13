@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Speaker;
 use App\Services\SpeakerService;
 
-class SpeakerControllers extends Controller
+class SpeakerController extends Controller
 {
     protected $speakerService;
 
