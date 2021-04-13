@@ -31,6 +31,6 @@ class SpeakerControllers extends Controller
             ];
         }
 
-        return $res;
+        return response()->json($res['data'], $res['status']);
     }
 }
