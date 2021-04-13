@@ -15,6 +15,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/meeting', 'MeetingController@index');
+$router->post('/update', 'MeetingController@update');
+
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->post('register', 'AuthController@register');
