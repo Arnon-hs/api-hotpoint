@@ -16,7 +16,6 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/meeting', 'MeetingController@index');
-$router->post('/update', 'MeetingController@update');
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
@@ -25,7 +24,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('logout', 'AuthController@logout');
     $router->post('refresh', 'AuthController@refresh');
 
+    $router->group(['prefix' => 'meeting'], function () use ($router) {
+        $router->post('set', 'MeetingController@setMeeting');
+        $router->post('update', 'MeetingController@update');
+        $router->post('delete', 'MeetingController@destroy');
+    });
+
     $router->group(['middleware' => 'auth'], function ($router) {
         $router->get('me', 'AuthController@me');
+
     });
 });

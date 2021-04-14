@@ -26,11 +26,24 @@ class MeetingRepository
     public function setMeeting($data)
     {
         $result = $this->meeting::create([
-            'meeting_time' => $data['time'],
-            'speaker_id' => $data['speaker_id'],
-            'meeting_confirm' => $data['confirm']
+            'meeting_time' => $data['meeting_time'],
+            'speakers_id' => $data['speakers_id'],
+            'user_id' => $data['user_id']
         ]);
         return $result;
+    }
+
+    public function updateMeeting($data)
+    {
+        $meeting = $this->meeting::find($data['id']);
+        $meeting->meeting_confirm = 1;
+        $meeting->save();
+        return $meeting->toArray();
+    }
+
+    public function deleteMeeting($data)
+    {
+        $meeting = $this->meeting::destroy($data['id']);
     }
 
 }

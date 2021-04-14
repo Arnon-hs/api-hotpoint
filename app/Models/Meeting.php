@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Meeting extends Model
 {
     protected $fillable = [
-        'id', 'meeting_time', 'speakers_id', 'meeting_confirm'
+        'id', 'meeting_time', 'speakers_id', 'user_id', 'meeting_confirm'
     ];
 
     public $timestamps = false;
@@ -17,5 +17,10 @@ class Meeting extends Model
     public function speaker()
     {
         return $this->hasOne(Speaker::class, 'speaker_id', 'speakers_id')->first();
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'attendee_id', 'user_id')->first();
     }
 }

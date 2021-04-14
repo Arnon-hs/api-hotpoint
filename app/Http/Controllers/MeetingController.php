@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use App\Services\MeetingService;
-use http\Client\Request;
+use Illuminate\Http\Request;
 
 class MeetingController extends Controller
 {
@@ -16,7 +16,7 @@ class MeetingController extends Controller
      */
     public function __construct(MeetingService $meetingService)
     {
-        $this->middleware('auth:api', ['except' => ['index', 'update']]);
+        $this->middleware('auth:api', ['except' => ['index', 'update', 'destroy', 'setMeeting']]);
         $this->meetingService = $meetingService;
     }
 
@@ -35,10 +35,10 @@ class MeetingController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
-    public function setMeeting($data)
+    public function setMeeting(Request $request)
     {
         try {
-            $result = $this->meetingService->setMeeting($data);
+            $result = $this->meetingService->setMeeting($request);
             $result['data'] = $result;
             $result['status'] = 200;
         } catch (\Exception $e) {
@@ -58,12 +58,36 @@ class MeetingController extends Controller
 
     public function update(Request $request)
     {
-        echo $request->key();
+        if ($request['action'] == 'confirm') {
+            try {
+                $result = $this->meetingService->updateMeeting($request);
+                $result['data'] = $result;
+                $result['status'] = 200;
+            } catch (\Exception $e) {
+                $result = [
+                    'data' => $e->getMessage(),
+                    'status' => 500
+                ];
+            }
+        }
+        return response()->json($result['data'], $result['status']);
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
-
+        if ($request['action'] == 'delete') {
+            try {
+                $result = $this->meetingService->deleteMeeting($request);
+                $result['data'] = $result;
+                $result['status'] = 200;
+            } catch (\Exception $e) {
+                $result = [
+                    'data' => $e->getMessage(),
+                    'status' => 500
+                ];
+            }
+        }
+        return response()->json($result['data'], $result['status']);
     }
 
 }

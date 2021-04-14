@@ -17,6 +17,7 @@ class CreateMeetingTable extends Migration
             $table->id();
             $table->dateTime('meeting_time');
             $table->foreignId('speakers_id')->references('speaker_id')->on('speakers');
+            $table->foreignId('user_id')->references('attendee_id')->on('users');
             $table->integer('meeting_confirm')->default(0);
         });
     }

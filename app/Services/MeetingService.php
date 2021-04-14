@@ -44,4 +44,26 @@ class MeetingService
         return $result;
     }
 
+    public function updateMeeting($data)
+    {
+        try {
+            $result = $this->meetingRepository->updateMeeting($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable update meeting');
+        }
+        return $result;
+    }
+
+    public function deleteMeeting($data)
+    {
+        try {
+            $result = $this->meetingRepository->deleteMeeting($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable delete meeting');
+        }
+        return $result;
+    }
+
 }
