@@ -53,7 +53,7 @@ class GetSpeakers extends Command
             $speakers = $this->clientService->getSpeakers();
             foreach ($speakers as $speaker) {
                 Speaker::create([
-                    'speakerid' => $speaker->speakerid,
+                    'speaker_id' => $speaker->speakerid,
                     'questionid' => $speaker->questionid,
                     'speaker_fname' => $speaker->speaker_fname,
                     'speaker_mname' => $speaker->speaker_mname,

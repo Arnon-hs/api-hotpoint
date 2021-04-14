@@ -14,9 +14,9 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->get('/score', 'ScoreController@all');
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-
     $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
     $router->post('logout', 'AuthController@logout');
@@ -25,4 +25,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => 'auth'], function ($router) {
         $router->get('me', 'AuthController@me');
     });
+
+    $router->post('score/update', 'ScoreController@update');
+    $router->post('score/store', 'ScoreController@store');
+    $router->get('score/rating', 'ScoreController@rating');
 });
