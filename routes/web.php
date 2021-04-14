@@ -27,6 +27,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('speakers', 'SpeakerController@all');
         $router->get('sessions', 'SessionController@all');
         $router->get('poll', 'PollController@all');
-        $router->get('user_answer', 'UserAnswerController@all');
+        $router->post('user_answer', 'UserAnswerController@all');
     });
 });

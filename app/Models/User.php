@@ -70,6 +70,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function userAnswers(){
-        return $this->hasMany(UserAnswer::class,'users_id','attendee_id');
+        return $this->hasMany(UserAnswer::class);//'users_id','attendee_id'
     }
 }
+

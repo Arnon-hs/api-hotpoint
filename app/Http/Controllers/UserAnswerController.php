@@ -2,49 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserAnswerService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Speaker;
 use App\Models\Poll;
 use App\Models\UserAnswer;
-use App\Models\QuestionAndAnswer;
+use App\Models\Answer;
 use App\Services\SessionService;
 
 class UserAnswerController extends Controller
 {
-//    protected $sessionService;
 
-    public function __construct()
+    protected $userAnswerService;
+
+    public function __construct(UserAnswerService $userAnswerService)
     {
         $this->middleware('auth:api');
-
+        $this->userAnswerService = $userAnswerService;
     }
 
-    public function all()
+    /**
+     * Get a JWT via given credentials.  (Maybe rework to Repository pattern)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
+    public function all(Request $request)
     {
-        $result = User::first()->userAnswers();
+        //validate incoming request
+        $this->validate($request, [
+            'poll_id' => 'required|integer|exists:answers',
+            'answer_id' => 'required|integer|exists:answers',
+        ]);
 
-//        foreach ($result as $answer){
-//            $answer->Answers;
-//        }
-//        $res['data'] = $result;
-//        $res['status'] = 200;
-        return $result;
-//        $res = $result->poll;
-//        $result = Poll::all()->QuestionAndAnswer();
-//        return $resultAnswer,$resultAnswer;
+        try
+        {
+            $result =  $this->userAnswerService->getUserAnswer($request);
+            $res['data'] = $result;
+            $res['status'] = '201';
+        }
+        catch (\Exception $e){
+            $res = [
+                'data' => $e->getMessage(),
+                'status' => 500
+            ];
+        }
+        return $res;
     }
-//        try {
-//            $result = $this->sessionService->getSession();
-//            $res['data'] = $result;
-//            $res['status'] = 200;
-//        } catch (\Exception $e) {
-//            $res = [
-//                'data' => $e->getMessage(),
-//                'status' => 500
-//            ];
-//        }
-//
-//        return response()->json($res['data'], $res['status']);
-//    }
 }

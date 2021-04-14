@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class QuestionAndAnswer extends Model
+class Answer extends Model
 {
     protected $primaryKey = 'id';
 

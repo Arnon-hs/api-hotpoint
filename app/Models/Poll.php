@@ -25,6 +25,6 @@ class Poll extends Model
     public $timestamps = false;
 
     public function Answers(){
-        return $this->hasMany(QuestionAndAnswer::class);
+        return $this->hasMany(Answer::class);
     }
 }
