@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Speaker;
 use App\Services\SpeakerService;
 
-class SpeakerControllers extends Controller
+class SpeakerController extends Controller
 {
     protected $speakerService;
 
@@ -31,6 +31,6 @@ class SpeakerControllers extends Controller
             ];
         }
 
-        return $res;
+        return response()->json($res['data'], $res['status']);
     }
 }

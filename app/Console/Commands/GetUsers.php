@@ -65,7 +65,7 @@ class GetUsers extends Command
                     'city' => $user->city,
                     'company' => $user->company,
                     'email' => $user->email,
-                    'attendeeid' => $user->attendeeid,
+                    'attendee_id' => $user->attendeeid,
                     'password' => app('hash')->make($user->attendeeid)
                 ]);
             }
