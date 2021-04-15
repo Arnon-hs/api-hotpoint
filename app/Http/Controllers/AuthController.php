@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ScoreService;
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function __construct()
+    protected $scoreService;
+
+    public function __construct(ScoreService $scoreService)
     {
         $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->scoreService = $scoreService;
     }
 
     /**
@@ -59,15 +63,19 @@ class AuthController extends Controller
         //validate incoming request
         $this->validate($request, [
             'password' => 'required|integer',
-            'email' => 'required|email',
+            'login' => 'required|email',
         ]);
 
-        $credentials = $request->only(['email', 'password']);
+        $credentials = ['email' => $request->login, 'password' => $request->password];
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return $this->respondWithToken($token);
+        $this->scoreService->storeActivity([
+            'title' => 'auth',
+            'attendee_id' => auth()->user()->attendee_id
+        ]);
+        return $this->respondWithTokenAndData($token, auth()->user());
     }
 
     /**

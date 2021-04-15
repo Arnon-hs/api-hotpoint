@@ -12,7 +12,19 @@ class Controller extends BaseController
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => null
+            'expires_in' => null,
+            'success' => true
+        ], 200);
+    }
+
+    public function respondWithTokenAndData($token, $data)
+    {
+        return response()->json([
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => null,
+            'userData' => $data,
+            'success' => true
         ], 200);
     }
 }
