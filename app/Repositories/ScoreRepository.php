@@ -54,8 +54,11 @@ class ScoreRepository
             $result = [];
             $usersActivities = UserActivity::all();
             foreach ($usersActivities as $activity) {
-                $action = $activity->action();
                 $user = $activity->user()->toArray();
+                if($user['company'] === 'Schneider Electric')
+                    continue;
+                $action = $activity->action();
+
                 $result[$user['attendee_id']]['user'] = $user;
                 if(isset($result[$user['attendee_id']]['score']))
                     $result[$user['attendee_id']]['score'] = $result[$user['attendee_id']]['score'] + $action->score_correct + $action->score_wrong;
