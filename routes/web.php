@@ -14,7 +14,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-$router->get('/score', 'ScoreController@all');
+$router->get('/score', 'ScoreController@index');
 
 $router->get('/meeting', 'MeetingController@index');
 
@@ -38,7 +38,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('user_answer', 'UserAnswerController@all');
     });
 
-    $router->post('score/update', 'ScoreController@update');
-    $router->post('score/store', 'ScoreController@store');
-    $router->get('score/rating', 'ScoreController@rating');
+    $router->group(['prefix' => 'score'], function ($router) {
+        $router->post('update', 'ScoreController@update');
+        $router->post('store', 'ScoreController@store');
+        $router->get('rating', 'ScoreController@rating');
+        $router->get('list', 'ScoreController@all');
+    });
 });
