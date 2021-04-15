@@ -29,21 +29,5 @@ class PollController extends Controller
         $res['data'] = $result;
         $res['status'] = 200;
         return $res;
-//        $res = $result->poll;
-//        $result = Poll::all()->QuestionAndAnswer();
-//        return $resultAnswer,$resultAnswer;
     }
-//        try {
-//            $result = $this->sessionService->getSession();
-//            $res['data'] = $result;
-//            $res['status'] = 200;
-//        } catch (\Exception $e) {
-//            $res = [
-//                'data' => $e->getMessage(),
-//                'status' => 500
-//            ];
-//        }
-//
-//        return response()->json($res['data'], $res['status']);
-//    }
 }
