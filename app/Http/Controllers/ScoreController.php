@@ -11,22 +11,34 @@ class ScoreController extends Controller
 
     public function __construct(ScoreService $scoreService)
     {
-        $this->middleware('auth:api', ['except' => ['update','all']]);
+        $this->middleware('auth:api', ['except' => ['update','index']]);
         $this->scoreService = $scoreService;
+    }
+
+    public function index()
+    {
+        $actions = $this->scoreService->allActions();
+        return view('score', compact('actions'));
     }
 
     public function all()
     {
-        $actions = $this->scoreService->allActions();
-        return view('score', compact('actions'));
+        try {
+            $result['data'] = $this->scoreService->allActions();
+            $result['status'] = 200;
+        } catch(\Exception $e) {
+            $result['data']['error'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+        return response()->json($result['data'], $result['status']);
     }
 
     public function update(Request $request)
     {
         try {
             $data = $request->only(['id', 'score_correct', 'score_wrong']);
-            $result = $this->scoreService->updateAction($data);
-            $result['status'] = 201;
+            $result['data'] = $this->scoreService->updateAction($data);
+            $result['status'] = 200;
         } catch(\Exception $e) {
             $result['data']['error'] = $e->getMessage();
             $result['status'] = 500;
