@@ -15,6 +15,7 @@ class SpeakerRepository
 
     public function getSpeakers()
     {
-        return $this->speaker::all()->toArray();
+        return $speakers = $this->speaker::all()->toArray();
+//        dd($speakers);
     }
 }

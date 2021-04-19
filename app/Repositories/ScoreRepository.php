@@ -42,14 +42,16 @@ class ScoreRepository
         $userActivity->attendee_id = $data['attendee_id'];
         $userActivity->save();
 
+//        app('redis')->forget('rating');
+
         return 'Successfully set user activity!';
     }
 
     public function getRating()
     {
         try {
-            if($result = Cache::get('rating'))
-                return $result;
+//            if($result = app('redis')->get('rating'))
+//                return $result;
 
             $result = [];
             $usersActivities = UserActivity::all();
@@ -68,7 +70,7 @@ class ScoreRepository
             $result = array_slice($result,0,50);
             array_multisort(array_column($result, 'score'), SORT_DESC,  $result);
 
-            Cache::put('rating', $result);
+//            app('redis')->set('rating', $result);
         } catch (\Exception $e){
             throw new \InvalidArgumentException($e->getMessage());
         }

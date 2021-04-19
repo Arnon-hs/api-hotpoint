@@ -24,7 +24,7 @@ $app = new Laravel\Lumen\Application(
 );
 
  $app->withFacades();
-
+ 
  $app->withEloquent();
 
 /*
@@ -60,7 +60,7 @@ $app->singleton(
 */
 
 $app->configure('app');
-$app->configure('database');
+//$app->configure('database');
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ $app->configure('database');
  $app->register(App\Providers\EventServiceProvider::class);
  $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
  $app->register(Chuckrincon\LumenConfigDiscover\DiscoverServiceProvider::class);
- $app->register(Illuminate\Redis\RedisServiceProvider::class);
+// $app->register(Illuminate\Redis\RedisServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

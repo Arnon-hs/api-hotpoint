@@ -17,8 +17,8 @@ class SpeakerController extends Controller
     public function all()
     {
         try {
-            $res = $this->speakerService->getSpeakers();
-            $res['data'] = $res;
+            $speakers = $this->speakerService->getSpeakers();
+            $res['data'] = $speakers;
             $res['status'] = 200;
         }
         catch (\Exception $e){

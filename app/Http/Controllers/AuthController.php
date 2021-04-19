@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ClientService;
 use App\Services\ScoreService;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    protected $scoreService;
+    protected $scoreService, $clientService;
 
-    public function __construct(ScoreService $scoreService)
+    public function __construct(ScoreService $scoreService, ClientService $clientService)
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login','register', 'set']]);
         $this->scoreService = $scoreService;
+        $this->clientService = $clientService;
     }
 
     /**
@@ -108,5 +111,20 @@ class AuthController extends Controller
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Test webhook
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function set(Request $request)
+    {
+        DB::table('webhook')->insert([
+            'text' => json_encode($request->all())
+        ]);
+        $data = $request->only(['attendeeid']);
+        $this->clientService->setUserData($data['attendeeid']);
+        return response()->json(['message' => 'Successfully!']);
     }
 }
