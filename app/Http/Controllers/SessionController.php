@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Session;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Speaker;
@@ -19,9 +20,11 @@ class SessionController extends Controller
     public function all()
     {
         try {
-            $result = $this->sessionService->getSession();
-            $res['data'] = $result;
+//            $result = $this->sessionService->getSession();
+//            $res[]['streamsCount'] = count($result);
+            $res['data'] = $this->sessionService->getSession();
             $res['status'] = 200;
+
         } catch (\Exception $e) {
             $res = [
                 'data' => $e->getMessage(),
