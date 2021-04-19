@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'fname', 'mname', 'lname', 'password', 'email', 'mphone', 'city', 'company', 'attendeeid'
+        'fname', 'mname', 'lname', 'email', 'mphone', 'city', 'company', 'attendee_id'
     ];
 
     /**
@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'points',
+        'points', 'password'
     ];
 
     /**
@@ -37,7 +37,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public $timestamps = false;
 
-    protected $primaryKey = 'attendeeid';
+    protected $primaryKey = 'attendee_id';
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -68,4 +68,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->password;
     }
+
+    public function userAnswers(){
+        return $this->hasMany(UserAnswer::class);//'users_id','attendee_id'
+    }
 }
+
