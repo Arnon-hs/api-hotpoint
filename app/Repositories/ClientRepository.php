@@ -96,6 +96,24 @@ class ClientRepository
     }
 
     /**
+     * Get Session Personal List
+     * @param $token
+     * @return array|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getSessionPersonalList($token)
+    {
+        try{
+            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/regsessionlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token);
+            $sessionList = json_decode($response->getBody())->ResultSet;
+        }catch (\Exception $e) {
+            $sessionList = null;
+        }
+
+        return $sessionList;
+    }
+
+    /**
      * Get Session List
      * @param $token
      * @return array|null

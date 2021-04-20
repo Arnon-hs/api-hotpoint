@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\GetUsers::class,
         \App\Console\Commands\GetSessionList::class,
         \App\Console\Commands\GetSpeakers::class,
+        \App\Console\Commands\GetSessionPersonalList::class,
         \App\Console\Commands\DischargeMeetings::class
     ];
 
@@ -30,6 +31,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('get:users')->everyFiveMinutes();
         $schedule->command('get:sessionlist')->dailyAt('17:00');
+        $schedule->command('get:usersessionlist')->dailyAt('17:00');
         $schedule->command('get:speakers')->dailyAt('17:00');
         $schedule->command('discharge:meetings')->dailyAt('19:00');
     }

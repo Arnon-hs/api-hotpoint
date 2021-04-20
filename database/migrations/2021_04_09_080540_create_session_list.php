@@ -14,8 +14,8 @@ class CreateSessionList extends Migration
     public function up()
     {
         Schema::create('session_list', function (Blueprint $table) {
-            $table->bigInteger('sessionid')->unique();
-            $table->bigInteger('questionid');
+            $table->unsignedBigInteger('sessionid');
+            $table->unsignedBigInteger('questionid');
             $table->string('name');
             $table->string('desc')->nullable();
             $table->date('sessiondate')->nullable();
