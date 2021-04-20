@@ -41,6 +41,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('schedule-common', 'SessionController@all');
         $router->get('poll', 'PollController@all');
         $router->post('user_answer', 'UserAnswerController@all');
+        $router->post('user_schedule', 'UserScheduleController@all');
     });
 
     $router->group(['prefix' => 'score'], function ($router) {

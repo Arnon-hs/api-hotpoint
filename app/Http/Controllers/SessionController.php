@@ -22,7 +22,7 @@ class SessionController extends Controller
         try {
 //            $result = $this->sessionService->getSession();
 //            $res[]['streamsCount'] = count($result);
-            $res['data'] = $this->sessionService->getSession();
+            $res['data'] = $this->sessionService->getSessionsUser();
             $res['status'] = 200;
 
         } catch (\Exception $e) {

@@ -26,4 +26,8 @@ class UserSession extends Model
      * @var string
      */
     public $table = 'user_sessionlist';
+
+
+
 }
+
