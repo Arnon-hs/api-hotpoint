@@ -102,6 +102,23 @@ class ClientService
     }
 
     /**
+     * Get Session Personal list
+     * @return array|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getSessionPersonalList()
+    {
+        try{
+            $result = $this->clientRepository->getSessionPersonalList($this->token);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable get session personal list');
+        }
+
+        return $result;
+    }
+
+    /**
      * Get speakers
      * @return array|null
      * @throws \GuzzleHttp\Exception\GuzzleException
