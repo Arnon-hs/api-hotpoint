@@ -14,6 +14,7 @@ class Session extends Model
     protected $fillable = [
         'session_id',
         'speaker_id',
+        'speaker_ids',
         'sort',
         'name',
         'sessiondate',

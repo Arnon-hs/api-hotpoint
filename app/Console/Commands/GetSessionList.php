@@ -54,17 +54,22 @@ class GetSessionList extends Command
             $sessionList = $this->clientService->getSessionList();
             if(empty($sessionList))
                 echo 'Session list is empty';
-            dd($sessionList);
+
             foreach ($sessionList as $session) {
+                $speaker_ids = [];
+                foreach (preg_grep("/^speaker_\d+_speakerid$/i", array_keys(get_object_vars($session))) as $el)
+                    $speaker_ids[] = $session->$el;
+
                 Session::create([
-                    'session_id' => $session->session_id,
-                    'speaker_id' => $session->speaker_id,
+                    'session_id' => $session->sessionid,
+                    'speaker_ids' => implode(';',$speaker_ids),
                     'sort' => $session->sort,
-                    'name' => $session->name,
+                    'name' => mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'),
+//                    'name' => mb_detect_encoding($session->name, 'HTML-ENTITIES')? mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'): $session->name ,
                     'sessiondate' => $session->sessiondate,
                     'starttime' => $session->starttime,
                     'endtime' => $session->endtime,
-                    'location_id' => $session->location_id,
+                    'location_id' => $session->locationid,
                 ]);
             }
             echo 'Complete! Session list successfully added to Database.' . PHP_EOL;
