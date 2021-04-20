@@ -15,7 +15,7 @@ class SessionRepository
 
     public function getSessions()
     {
-        return Session::all()->orderBy('sort');
+        return Session::orderBy('sort')->get();
     }
 
 }

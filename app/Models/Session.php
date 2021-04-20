@@ -13,7 +13,6 @@ class Session extends Model
      */
     protected $fillable = [
         'session_id',
-        'speaker_id',
         'speaker_ids',
         'sort',
         'name',
@@ -39,5 +38,5 @@ class Session extends Model
      * Primary key
      * @var integer
      */
-    protected $primaryKey = 'sessionid';
+    protected $primaryKey = 'session_id';
 }

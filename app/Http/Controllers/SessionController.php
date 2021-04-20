@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Session;
@@ -13,18 +14,15 @@ class SessionController extends Controller
 
     public function __construct(SessionService $sessionService)
     {
-        $this->middleware('auth:api');
+//        $this->middleware('auth:api');
         $this->sessionService = $sessionService;
     }
 
     public function all()
     {
         try {
-//            $result = $this->sessionService->getSession();
-//            $res[]['streamsCount'] = count($result);
             $res['data'] = $this->sessionService->getSession();
             $res['status'] = 200;
-
         } catch (\Exception $e) {
             $res = [
                 'data' => $e->getMessage(),
