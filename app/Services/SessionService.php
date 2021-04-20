@@ -22,6 +22,7 @@ class SessionService
     {
 //        try {
             $res = $this->sessionRepository->getSessions();
+//            dd($res);
 //            $result = $res->only(['sessionid','name']);
 //            $day1 = $res->where('sessiondate','2021-04-27');
 //            $day2 = $res->where('sessiondate','2021-04-28');
@@ -39,7 +40,7 @@ class SessionService
                 $end_time_ex = substr($result->endtime, 0, -3);
                 $a[$result->sessiondate][$key]['time'] = $start_time_ex . ' - ' . $end_time_ex;
                 $a[$result->sessiondate][$key]['name'] = $result->name;
-                $a[$result->sessiondate][$key]['sessionid'] = $result->sessionid;
+                $a[$result->sessiondate][$key]['session_id'] = $result->sessionid;
                 $a[$result->sessiondate][$key]['location_name'] = $result->location_name;
                 unset($result->starttime);
                 unset($result->endtime);

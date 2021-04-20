@@ -12,7 +12,14 @@ class Session extends Model
      * @var array
      */
     protected $fillable = [
-        'sessionid', 'questionid', 'name', 'desc', 'sessiondate', 'starttime', 'endtime', 'sort', 'location_name', 'locationid', 'openflag', 'visible'
+        'session_id',
+        'speaker_id',
+        'sort',
+        'name',
+        'sessiondate',
+        'starttime',
+        'endtime',
+        'location_id'
     ];
 
     /**
