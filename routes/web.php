@@ -17,9 +17,10 @@ $router->get('/', function () use ($router) {
 $router->get('/score', 'ScoreController@index');
 
 $router->get('/meeting', 'MeetingController@index');
-$router->get('schedule-common', 'SessionController@all');
 
 $router->group(['prefix' => 'api'], function () use ($router) {
+    $router->get('schedule-common', 'SessionController@all');
+
     $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
     $router->post('logout', 'AuthController@logout');
@@ -34,14 +35,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'auth'], function () use ($router) {
         $router->post('set', 'AuthController@set');
     });
-    $router->get('schedule-common', 'SessionController@all');
+
     $router->group(['middleware' => 'auth'], function ($router) {
         $router->get('me', 'AuthController@me');
         $router->get('speakers', 'SpeakerController@all');
-
         $router->get('poll', 'PollController@all');
+        $router->get('schedule-user', 'UserSessionController@allPersonal');
         $router->post('user_answer', 'UserAnswerController@all');
-        $router->get('schedule-user', 'UserScheduleController@all');
     });
 
     $router->group(['prefix' => 'score'], function ($router) {

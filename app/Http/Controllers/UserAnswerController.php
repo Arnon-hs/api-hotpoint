@@ -23,14 +23,12 @@ class UserAnswerController extends Controller
     }
 
     /**
-     * Get a JWT via given credentials.  (Maybe rework to Repository pattern)
-     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function all(Request $request)
+    public function all(Request $request)//TODO validate in Service, return response()->json();
     {
         //validate incoming request
         $this->validate($request, [

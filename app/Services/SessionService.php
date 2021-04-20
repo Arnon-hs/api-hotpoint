@@ -19,7 +19,7 @@ class SessionService
         $this->sessionRepository = $sessionRepository;
     }
 
-    public function getSession()//TODO
+    public function getSessions()//TODO
     {
         $sessions = $this->sessionRepository->getSessions();
         $result = [];
@@ -39,5 +39,27 @@ class SessionService
             unset($session->sort);
         }
         return $result;
+    }
+
+
+    public function getSessionsPersonal()
+    {
+        $sessions = $this->sessionRepository->getSessionsPersonal();
+
+        foreach ($sessions as $key => $session) {
+            if(!isset($result_arr[$session->sessiondate]))
+                $result_arr[$session->sessiondate] = [];
+
+            $start_time_ex = substr($session->starttime, 0, -3);
+            $end_time_ex = substr($session->endtime, 0, -3);
+            $res['data'][$session->sessiondate][$key]['time'] = $start_time_ex . ' - ' . $end_time_ex;
+            $res['data'][$session->sessiondate][$key]['title'] = $session->name;
+            $res['data'][$session->sessiondate][$key]['speakers'] = $session->speaker_id;
+            unset($session->starttime);
+            unset($session->endtime);
+            unset($session->sort);
+        }
+
+        return $sessions;
     }
 }

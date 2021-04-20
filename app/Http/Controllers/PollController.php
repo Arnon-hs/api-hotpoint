@@ -16,16 +16,15 @@ class PollController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-
     }
 
-    public function all()
+    public function all()//TODO Repository!!!
     {
         $result = Poll::all();
 
-        foreach ($result as $answer){
+        foreach ($result as $answer)
            $answer->Answers;
-        }
+
         $res['data'] = $result;
         $res['status'] = 200;
         return $res;

@@ -18,4 +18,8 @@ class SessionRepository
         return Session::orderBy('sort')->get();
     }
 
+    public function getSessionsPersonal()
+    {
+        return auth()->user()->sessions;
+    }
 }
