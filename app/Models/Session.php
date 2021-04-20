@@ -39,4 +39,9 @@ class Session extends Model
      * @var integer
      */
     protected $primaryKey = 'session_id';
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'user_sessionlist','session_id','user_id');
+    }
 }

@@ -27,3 +27,4 @@ class UserSession extends Model
      */
     public $table = 'user_sessionlist';
 }
+
