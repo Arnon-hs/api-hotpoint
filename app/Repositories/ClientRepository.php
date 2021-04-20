@@ -122,7 +122,7 @@ class ClientRepository
     public function getSpeakers($token)
     {
         try{
-            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/speakerlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token);
+            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/speakerlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token.'&language=rus');
             $speakers = json_decode($response->getBody())->ResultSet;
         }catch (\Exception $e) {
             $speakers = null;

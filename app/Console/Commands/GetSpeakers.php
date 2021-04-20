@@ -51,18 +51,15 @@ class GetSpeakers extends Command
         try {
             DB::table('speakers')->delete();
             $speakers = $this->clientService->getSpeakers();
+
             foreach ($speakers as $speaker) {
                 if((int) $speaker->deleted === 1)
                     continue;
                 Speaker::create([
                     'speaker_id' => $speaker->speakerid,
-                    'questionid' => $speaker->questionid,
-                    'speaker_fname' => mb_convert_encoding($speaker->speaker_fname,'UTF-8','HTML-ENTITIES'),
-                    'speaker_mname' => mb_convert_encoding($speaker->speaker_mname,'UTF-8','HTML-ENTITIES'),
-                    'speaker_lname' => mb_convert_encoding($speaker->speaker_lname,'UTF-8','HTML-ENTITIES'),
-                    'speaker_image' => $speaker->speaker_image,
-                    'speaker_titles' => mb_convert_encoding($speaker->speaker_titles,'UTF-8','HTML-ENTITIES'),
-                    'speaker_companies' => mb_convert_encoding($speaker->speaker_companies,'UTF-8','HTML-ENTITIES')
+                    'name' => mb_convert_encoding(trim($speaker->speaker_fname.' '.$speaker->speaker_lname.' '.$speaker->speaker_mname) ,'UTF-8','HTML-ENTITIES'),
+                    'position' => mb_convert_encoding($speaker->speaker_titles,'UTF-8','HTML-ENTITIES'),
+                    'company' => mb_convert_encoding($speaker->speaker_companies,'UTF-8','HTML-ENTITIES')
                 ]);
             }
             echo 'Complete! Speakers list successfully added to Database.' . PHP_EOL;
