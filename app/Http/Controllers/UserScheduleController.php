@@ -15,17 +15,12 @@ use App\Services\SessionService;
 class UserScheduleController extends Controller
 {
 
-//    protected $userAnswerService;
-
     public function __construct()
     {
         $this->middleware('auth:api');
-//        $this->userAnswerService = $userAnswerService;
     }
 
     /**
-     * Get a JWT via given credentials.  (Maybe rework to Repository pattern)
-     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException

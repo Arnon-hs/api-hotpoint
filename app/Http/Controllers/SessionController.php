@@ -20,8 +20,6 @@ class SessionController extends Controller
     public function all()
     {
         try {
-//            $result = $this->sessionService->getSession();
-//            $res[]['streamsCount'] = count($result);
             $res['data'] = $this->sessionService->getSessionsUser();
             $res['status'] = 200;
 
