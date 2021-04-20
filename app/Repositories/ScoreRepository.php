@@ -47,7 +47,7 @@ class ScoreRepository
         return 'Successfully set user activity!';
     }
 
-    public function getRating()
+    public function getRating()//TODO CACHE
     {
         try {
 //            if($result = app('redis')->get('rating'))

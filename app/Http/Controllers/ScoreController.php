@@ -15,12 +15,20 @@ class ScoreController extends Controller
         $this->scoreService = $scoreService;
     }
 
+    /**
+     * View
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $actions = $this->scoreService->allActions();
         return view('score', compact('actions'));
     }
 
+    /**
+     * Get all actions
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function all()
     {
         try {
@@ -33,6 +41,11 @@ class ScoreController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
+    /**
+     * Update action
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         try {

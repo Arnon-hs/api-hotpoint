@@ -30,7 +30,6 @@ class ClientService
     {
         $this->clientRepository = $clientRepository;
         $this->token = $this->getToken();
-//        $this->token2 = $this->getTokenV2();
     }
 
     /**
@@ -126,7 +125,7 @@ class ClientService
     public function getSpeakers()
     {
         try{
-            app('redis')->forget('speakers');
+//            app('redis')->forget('speakers');
             $result = $this->clientRepository->getSpeakers($this->token);
 
             if(empty($result))

@@ -43,7 +43,7 @@ class MeetingRepository
 
     public function deleteMeeting($data)
     {
-        $meeting = $this->meeting::destroy($data['id']);
+        return $this->meeting::destroy($data['id']);
     }
 
 }

@@ -4,8 +4,6 @@ namespace App\Services;
 use App\Repositories\UserAnswerRepository;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\UserAnswer;
 use App\Models\Answer;
@@ -20,8 +18,7 @@ class UserAnswerService
     }
 
     public function getUserAnswer(Request $request)
-    {
-
+    {//TODO refactor this method!!!
         try {
             $result = $this->userAnswerRepository->getUserAnswer();
 
