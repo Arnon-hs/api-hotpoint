@@ -12,7 +12,7 @@ class Controller extends BaseController
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => null,
+            'expires_in' => 28800,
             'success' => true
         ], 200);
     }
@@ -22,7 +22,7 @@ class Controller extends BaseController
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => null,
+            'expires_in' => 28800,
             'userData' => $data,
             'success' => true
         ], 200);

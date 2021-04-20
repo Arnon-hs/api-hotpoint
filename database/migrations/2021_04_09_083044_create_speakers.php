@@ -20,6 +20,8 @@ class CreateSpeakers extends Migration
             $table->string('speaker_mname')->nullable();
             $table->string('speaker_lname')->nullable();
             $table->string('speaker_image')->nullable();
+            $table->string('speaker_titles')->nullable();
+            $table->string('speaker_companies')->nullable();
         });
     }
 
