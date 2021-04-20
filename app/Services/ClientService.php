@@ -124,8 +124,7 @@ class ClientService
      */
     public function getSpeakers()
     {
-        try{
-//            app('redis')->forget('speakers');
+        try {
             $result = $this->clientRepository->getSpeakers($this->token);
 
             if(empty($result))
