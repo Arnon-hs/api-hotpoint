@@ -19,7 +19,7 @@ class SessionService
         $this->sessionRepository = $sessionRepository;
     }
 
-    public function getSession()
+    public function getSession()//TODO
     {
         $sessions = $this->sessionRepository->getSessions();
         $result = [];
