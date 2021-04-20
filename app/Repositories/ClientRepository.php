@@ -86,7 +86,7 @@ class ClientRepository
     public function getSessionList($token)
     {
         try{
-            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/sessionlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token);
+            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/sessionlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token.'&language=rus');
             $sessionList = json_decode($response->getBody())->ResultSet;
         }catch (\Exception $e) {
             $sessionList = null;

@@ -54,7 +54,7 @@ class GetSessionList extends Command
             $sessionList = $this->clientService->getSessionList();
             if(empty($sessionList))
                 return 'Session list is empty';
-
+            dd($sessionList);
             foreach ($sessionList as $session) {
                 Session::create([
                     'sessionid' => $session->sessionid,
