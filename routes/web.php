@@ -40,7 +40,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('me', 'AuthController@me');
         $router->get('speakers', 'SpeakerController@all');
         $router->get('poll', 'PollController@all');
-        $router->get('schedule-user', 'UserSessionController@allPersonal');
+        $router->get('schedule-user', 'SessionController@allPersonal');
         $router->post('user_answer', 'UserAnswerController@all');
     });
 
