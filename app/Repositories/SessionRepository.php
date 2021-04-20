@@ -15,7 +15,7 @@ class SessionRepository
 
     public function getSessions()
     {
-        return DB::table('session_list')->select(['sessionid','name','sessiondate','starttime','endtime','sort','location_name'])->orderBy('sort')->get();
+        return Session::orderBy('sort')->get();
     }
 
 }

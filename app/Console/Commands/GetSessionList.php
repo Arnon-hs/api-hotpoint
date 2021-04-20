@@ -53,27 +53,28 @@ class GetSessionList extends Command
 
             $sessionList = $this->clientService->getSessionList();
             if(empty($sessionList))
-                return 'Session list is empty';
+                echo 'Session list is empty';
 
             foreach ($sessionList as $session) {
+                $speaker_ids = [];
+                foreach (preg_grep("/^speaker_\d+_speakerid$/i", array_keys(get_object_vars($session))) as $el)
+                    $speaker_ids[] = $session->$el;
+
                 Session::create([
-                    'sessionid' => $session->sessionid,
-                    'questionid' => $session->questionid,
-                    'name' => $session->name,
-                    'desc' => $session->desc,
+                    'session_id' => $session->sessionid,
+                    'speaker_ids' => implode(';',$speaker_ids),
+                    'sort' => $session->sort,
+                    'name' => mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'),
+//                    'name' => mb_detect_encoding($session->name, 'HTML-ENTITIES')? mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'): $session->name ,
                     'sessiondate' => $session->sessiondate,
                     'starttime' => $session->starttime,
                     'endtime' => $session->endtime,
-                    'sort' => $session->sort,
-                    'location_name' => $session->location_name,
-                    'locationid' => $session->locationid,
-                    'openflag' => $session->openflag,
-                    'visible' => $session->visible
+                    'location_id' => $session->locationid,
                 ]);
             }
-            return 'Complete! Session list successfully added to Database.' . PHP_EOL;
+            echo 'Complete! Session list successfully added to Database.' . PHP_EOL;
         } catch (\Exception $e) {
-            return $e->getMessage() . PHP_EOL;
+            echo $e->getMessage() . PHP_EOL;
         }
     }
 }
