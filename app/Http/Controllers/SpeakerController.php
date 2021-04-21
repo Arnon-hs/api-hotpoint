@@ -10,7 +10,7 @@ class SpeakerController extends Controller
 
     public function __construct(SpeakerService $speakerService)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['all']]);
         $this->speakerService = $speakerService;
     }
 

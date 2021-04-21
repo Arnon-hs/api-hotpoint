@@ -20,6 +20,8 @@ $router->get('/meeting', 'MeetingController@index');
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('schedule-common', 'SessionController@all');
+    
+    $router->get('speakers', 'SpeakerController@all');
 
     $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
