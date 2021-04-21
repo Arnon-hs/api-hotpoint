@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Repositories\ClientRepository;
 use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
@@ -146,7 +147,18 @@ class ClientService
     public function setUserData($id)
     {
         try{
-            $result = $this->clientRepository->getUserData($this->getTokenV2(), $id);
+            $user = $this->clientRepository->getUserData($this->token, $id);
+            $result = User::updateOrCreate( //todo to Repository
+                ['attendee_id' => $user['attendeeid']], [
+                    'password' => app('hash')->make($user['attendeeid']),
+                    'fname' => $user['fname'],
+                    'mname' => $user['mname'],
+                    'lname' => $user['lname'],
+                    'email' => $user['email'],
+                    'mphone' => $user['mphone'],
+                    'city' => $user['city'],
+                    'company' => $user['company']
+                ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable set user data');

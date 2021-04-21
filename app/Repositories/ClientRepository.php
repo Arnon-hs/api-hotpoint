@@ -132,7 +132,7 @@ class ClientRepository
     }
 
     /**
-     * Get User data TODO
+     * Get User data
      * @param $token
      * @param $id
      * @return array|null
@@ -140,13 +140,12 @@ class ClientRepository
      */
     public function getUserData($token, $id)
     {
-//        try{//GET https://[API Endpoint Host]/api/v2/ereg/getAttendee.json
-            $response = $this->client->request('GET', 'https://eu.eventscloud.com/api/v2/ereg/getAttendee.json?accesstoken='.$token.'&attendeeid='.$id.'&eventid='.env('EVENT_ID').'&responseArrray=1');
-//            $result = json_decode($response->getBody())->ResultSet;
-            dd($response->getBody(), $id, $token, $response);
-//        }catch (\Exception $e) {
-//            $result = null;
-//        }
+        try{
+            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/attendeelist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token.'&language=rus&attendeeid='.$id);
+            $result = json_decode($response->getBody(), true)['ResultSet'][0];
+        }catch (\Exception $e) {
+            $result = null;
+        }
 
         return $result;
     }

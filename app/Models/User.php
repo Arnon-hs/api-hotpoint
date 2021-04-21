@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'fname', 'mname', 'lname', 'email', 'mphone', 'city', 'company', 'attendee_id'
+        'fname', 'mname', 'lname', 'email', 'mphone', 'city', 'company', 'attendee_id', 'password'
     ];
 
     /**
@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'points', 'password'
+        'password'
     ];
 
     /**
@@ -76,7 +76,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function sessions()
     {
-        return $this->belongsToMany(Session::class, 'user_sessionlist','user_id','session_id');//
+        return $this->belongsToMany(Session::class, 'user_sessionlist','user_id','session_id');
     }
 }
 
