@@ -44,4 +44,8 @@ class Session extends Model
     {
         return $this->belongsToMany(User::class,'user_sessionlist','session_id','user_id');
     }
+
+    public function location(){
+        return $this->belongsTo(Location::class,'location_id', 'location_id');
+    }
 }
