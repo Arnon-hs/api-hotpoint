@@ -74,11 +74,16 @@ class AuthController extends Controller
         if (! $token = auth()->setTTL(28800)->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         $this->scoreService->storeActivity([
             'title' => 'auth',
             'attendee_id' => auth()->user()->attendee_id
         ]);
-        return $this->respondWithTokenAndData($token, auth()->user());
+
+        $user = auth()->user();
+        $auth = $this->clientService->getAuthHCC($user);
+
+        return $this->respondWithTokenAndData($token, $user, $auth);
     }
 
     /**

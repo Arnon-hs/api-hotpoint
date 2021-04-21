@@ -167,4 +167,29 @@ class ClientService
         return $result;
     }
 
+    /**
+     * Forming a parameter value 'auth'
+     * @return string|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getAuthHCC($data)
+    {
+        try{
+            $time        = time();
+            $secret      = "Proofix444"; // Секретный ключ, который Вы ввели в административной панели сайта.
+            $user_base64 = base64_encode( json_encode([
+                'nick' => $data['fname'].' '.$data['lname'],
+                'email' => $data['email'],
+                'id' => $data['attendee_id']
+            ]));
+            $sign        = md5($secret . $user_base64 . $time);
+            $auth        = $user_base64 . "_" . $time . "_" . $sign;
+        } catch (\Exception $e) {
+            $auth = null;
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable set user data');
+        }
+
+        return $auth;
+    }
 }
