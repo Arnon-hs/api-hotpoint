@@ -15,7 +15,7 @@ class SessionRepository
 
     public function getSessions()
     {
-        return Session::orderBy('sort')->get()->toArray();
+        return Session::orderBy('sort')->get();
     }
 
     public function getSessionsPersonal()

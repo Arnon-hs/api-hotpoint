@@ -53,10 +53,18 @@ class ScoreRepository
                 $user = $activity->user()->toArray();
                 if($user['company'] === 'Schneider Electric' || $user['fname'] == null)
                     continue;
+
+                if((bool) $user['confirmShowName']) {
+                    $result[$user['attendee_id']]['firstName'] = $user['fname'];
+                    $result[$user['attendee_id']]['lastName'] = $user['lname'];
+                }
+                else {
+                    $result[$user['attendee_id']]['firstName'] = 'Анонимный';
+                    $result[$user['attendee_id']]['lastName'] = 'Пользователь';
+                }
+
                 $action = $activity->action();
 
-                $result[$user['attendee_id']]['firstName'] = $user['fname'];
-                $result[$user['attendee_id']]['lastName'] = $user['lname'];
                 if(isset($result[$user['attendee_id']]['points']))
                     $result[$user['attendee_id']]['points'] = $result[$user['attendee_id']]['points'] + $action->score_correct;//todo Formule + $action->score_wrong
                 else
