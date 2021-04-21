@@ -20,7 +20,7 @@ $router->get('/meeting', 'MeetingController@index');
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('schedule-common', 'SessionController@all');
-    
+
     $router->get('speakers', 'SpeakerController@all');
 
     $router->post('register', 'AuthController@register');
@@ -44,7 +44,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('poll', 'PollController@all');
         $router->get('schedule-user', 'SessionController@allPersonal');
         $router->post('user_answer', 'UserAnswerController@all');
+        $router->get('result-poll', 'PollResultController@getPollResult');
     });
+
+    $router->post('result-poll', 'PollResultController@all');
 
     $router->group(['prefix' => 'score'], function ($router) {
         $router->post('update', 'ScoreController@update');

@@ -27,7 +27,6 @@ class UserAnswerController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-
     public function all(Request $request)//TODO validate in Service, return response()->json();
     {
         //validate incoming request
