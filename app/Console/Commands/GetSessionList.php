@@ -56,21 +56,27 @@ class GetSessionList extends Command
                 echo 'Session list is empty';
 
             foreach ($sessionList as $session) {
+                if($session->locationid === 0)
+                    continue;
+
                 $speaker_ids = [];
                 foreach (preg_grep("/^speaker_\d+_speakerid$/i", array_keys(get_object_vars($session))) as $el)
                     $speaker_ids[] = $session->$el;
-
-                Session::create([
-                    'session_id' => $session->sessionid,
-                    'speaker_ids' => implode(';',$speaker_ids),
-                    'sort' => $session->sort,
-                    'name' => mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'),
+                try {
+                    Session::create([
+                        'session_id' => $session->sessionid,
+                        'speaker_ids' => implode(';', $speaker_ids),
+                        'sort' => $session->sort,
+                        'name' => $session->name,//mb_convert_encoding(,'UTF-8','HTML-ENTITIES') TODO UTF-8
 //                    'name' => mb_detect_encoding($session->name, 'HTML-ENTITIES')? mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'): $session->name ,
-                    'sessiondate' => $session->sessiondate,
-                    'starttime' => $session->starttime,
-                    'endtime' => $session->endtime,
-                    'location_id' => $session->locationid,
-                ]);
+                        'sessiondate' => $session->sessiondate,
+                        'starttime' => $session->starttime,
+                        'endtime' => $session->endtime,
+                        'location_id' => $session->locationid,
+                    ]);
+                } catch(\Exception $e){
+                    echo $e->getMessage();
+                }
             }
             echo 'Complete! Session list successfully added to Database.' . PHP_EOL;
         } catch (\Exception $e) {
