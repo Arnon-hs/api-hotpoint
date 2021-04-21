@@ -21,14 +21,6 @@ class CreateLocationsTable extends Migration
             $table->bigInteger('chat_id');
             $table->bigInteger('chatWidget_id');
         });
-
-//        Schema::table('session_list', function (Blueprint $table){
-////            $table->unsignedBigInteger('location_id')->nullable(false)->change();
-////            $table->bigIncrements('location_id');
-//            $table->foreignID('location_id')->change()->references('location_id')->on('locations');
-////            $table->foreignId('location_id')->change()->constrained('poll');
-//        });
-
     }
 
     /**
