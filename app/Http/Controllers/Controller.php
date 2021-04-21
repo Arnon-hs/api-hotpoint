@@ -17,13 +17,14 @@ class Controller extends BaseController
         ], 200);
     }
 
-    public function respondWithTokenAndData($token, $data)
+    public function respondWithTokenAndData($token, $data, $auth)
     {
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => 28800,
             'userData' => $data,
+            'auth' => $auth,
             'success' => true
         ], 200);
     }
