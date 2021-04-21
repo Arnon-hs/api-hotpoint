@@ -114,17 +114,26 @@ class AuthController extends Controller
     }
 
     /**
-     * Test webhook
-     *
+     * WebHook reg/update user
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function set(Request $request)
     {
         DB::table('webhook')->insert([
             'text' => json_encode($request->all())
         ]);
-        $data = $request->only(['attendeeid']);
-        $this->clientService->setUserData($data['attendeeid']);
-        return response()->json(['message' => 'Successfully!']);
+
+        try{
+            $data = $request->only(['attendeeid']);
+            $result['data'] = $this->clientService->setUserData($data['attendeeid']);
+            $result['status'] = 200;
+        } catch (\Exception $e){
+            $result['data'] = ['error' => $e->getMessage()];
+            $result['status'] = 200;
+        }
+
+        return response()->json($result['data'], $result['status']);
     }
 }
