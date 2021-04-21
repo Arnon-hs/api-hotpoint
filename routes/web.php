@@ -47,9 +47,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['prefix' => 'score'], function ($router) {
+        $router->group(['middleware' => 'auth'], function ($router) {
+            $router->get('', 'ScoreController@score');
+            $router->get('rating', 'ScoreController@rating');
+            $router->get('list', 'ScoreController@all');
+        });
         $router->post('update', 'ScoreController@update');
         $router->post('store', 'ScoreController@store');
-        $router->get('rating', 'ScoreController@rating');
-        $router->get('list', 'ScoreController@all');
     });
 });
