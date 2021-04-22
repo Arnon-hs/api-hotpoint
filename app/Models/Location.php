@@ -7,6 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'location_id', 'name', 'videoPath', 'videoPathEn', 'chat_id', 'chatWidget_id', 'stream_id'
+    ];
+    
+    /**
+     * Table
+     * @var string
+     */
+    public $table = 'locations';
+    
     public function sessions()
     {
         return $this->hasMany(Session::class);
