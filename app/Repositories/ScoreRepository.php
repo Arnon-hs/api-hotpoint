@@ -59,8 +59,8 @@ class ScoreRepository
                     $result[$user['attendee_id']]['lastName'] = $user['lname'];
                 }
                 else {
-                    $result[$user['attendee_id']]['firstName'] = 'Анонимный';
-                    $result[$user['attendee_id']]['lastName'] = 'Пользователь';
+                    $result[$user['attendee_id']]['firstName'] = 'User';
+                    $result[$user['attendee_id']]['lastName'] = substr($user['attendee_id'],-1, 3);
                 }
 
                 $action = $activity->action();

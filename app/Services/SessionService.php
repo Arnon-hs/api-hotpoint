@@ -83,6 +83,7 @@ class SessionService
             $names = [];
 
             $location_name = Location::where('location_id',$session->location_id)->get()->first()->name;
+            $streamId = Location::where('location_id',$session->location_id)->get()->first()->stream_id;
             $explode_speakers = explode(';' ,$session->speaker_ids);
 
             DB::table('speakers')->whereIn('speaker_id', $explode_speakers)->get()->each(function ($speaker_name) use (&$names){

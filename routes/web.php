@@ -58,5 +58,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'score'], function ($router) { 
         $router->post('update', 'ScoreController@update');
         $router->post('store', 'ScoreController@store');
+        $router->get('show', 'ScoreController@score');
     });
 });
