@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Session;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Speaker;
 use App\Services\SessionService;
 
 class SessionController extends Controller
