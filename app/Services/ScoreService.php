@@ -79,4 +79,16 @@ class ScoreService
 
         return $result;
     }
+
+    public function getUserScore()
+    {
+        try {
+            $result = $this->scoreRepository->getUserScore();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable get user score');
+        }
+
+        return $result;
+    }
 }

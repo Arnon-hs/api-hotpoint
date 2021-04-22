@@ -63,10 +63,10 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        //validate incoming request
         $this->validate($request, [
             'password' => 'required|integer',
             'login' => 'required|email',
+            'confirmShowName' => 'boolean'
         ]);
 
         $credentials = ['email' => $request->login, 'password' => $request->password];
@@ -75,12 +75,17 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        $user = auth()->user();
+
         $this->scoreService->storeActivity([
             'title' => 'auth',
-            'attendee_id' => auth()->user()->attendee_id
+            'attendee_id' => $user->attendee_id
         ]);
 
-        $user = auth()->user();
+        $model = User::find($user->attendee_id);
+        $model->confirmShowName = (int) $request->confirmShowName;
+        $model->save();
+
         $auth = $this->clientService->getAuthHCC($user);
 
         return $this->respondWithTokenAndData($token, $user, $auth);

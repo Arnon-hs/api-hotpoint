@@ -82,13 +82,28 @@ class ScoreController extends Controller
 
     /**
      * Rating TOP-50
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function rating()
     {
         try {
             $result['data'] = $this->scoreService->getRating();
+            $result['status'] = 200;
+        } catch(\Exception $e) {
+            $result['data']['error'] = $e->getMessage();
+            $result['status'] = 500;
+        }
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
+     * User score
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function score()
+    {
+        try {
+            $result['data'] = $this->scoreService->getUserScore();
             $result['status'] = 200;
         } catch(\Exception $e) {
             $result['data']['error'] = $e->getMessage();
