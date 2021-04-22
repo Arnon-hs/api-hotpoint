@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Meeting extends Model
 {
+
+
     protected $fillable = [
-        'id', 'meeting_time', 'speakers_id', 'user_id', 'meeting_confirm'
+        'id', 'meeting_time', 'speakers_id', 'user_id', 'meeting_confirm', 'meeting_date'
     ];
 
     public $timestamps = false;
