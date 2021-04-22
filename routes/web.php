@@ -29,7 +29,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('refresh', 'AuthController@refresh');
 
     $router->group(['prefix' => 'meeting'], function () use ($router) {
-        $router->post('set', 'MeetingController@setMeeting');
+        $router->group(['middleware' => 'auth'], function ($router) {
+            $router->get('list', 'MeetingController@getMeeting');
+        });
         $router->post('update', 'MeetingController@update');
         $router->post('delete', 'MeetingController@destroy');
     });

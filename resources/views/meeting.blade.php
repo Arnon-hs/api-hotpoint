@@ -17,62 +17,77 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-    <title></title>
+    <title>Page for moderator</title>
 </head>
 <body>
-<table class="table">
+<table class="table ">
     <thead class="thead-dark">
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Speaker</th>
-        <th scope="col">User</th>
-        <th scope="col">Meeting time</th>
-        <th scope="col">Meeting status</th>
-        <th scope="col">Confirm</th>
-        <th scope="col">Delete</th>
-    </tr>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Speaker</th>
+            <th scope="col">User</th>
+            <th scope="col">Meeting time</th>
+            <th scope="col">Meeting status</th>
+            <th scope="col">Actions</th>
+        </tr>
     </thead>
     <tbody>
     @foreach($result as $action)
         <tr class="item-{{ $action->id }}">
             <th scope="row">{{ $action->id }}</th>
-            <td>{{ $action->speaker()->speaker_fname }} {{ $action->speaker()->speaker_lname }}</td>
-            <td>{{ $action->user()->fname }} {{ $action->user()->lname }} - {{ $action->user()->email }}</td>
+            <td>{{ $action->speaker()->name }}</td>
+            <td>
+                @if($action->user()->attendee_id === 219492931)
+                    User not known yet
+                @else
+                    {{ $action->user()->fname }} {{ $action->user()->lname }}<br>{{ $action->user()->email }}
+                @endif
+            </td>
             <td>{{ $action->meeting_time }}</td>
             <td>
-                @if($action->meeting_confirm == 0)
-                    Not confirmed
-                @elseif($action->meeting_confirm == 1)
+                @if((int) $action->meeting_confirm === 0)
+                    Empty slot
+                @elseif((int) $action->meeting_confirm === 1)
                     Confirmed
+                @elseif((int) $action->meeting_confirm === 2)
+                    Awaiting approval
                 @endif
             </td>
             <td>
-                @if($action->meeting_confirm == 0)
+                @if((int) $action->meeting_confirm === 2)
                     <form data-id="{{ $action->id }}">
-                        <button class="btn btn-sm btn-primary update mt-1" type="button"
-                                onclick="myConfirm({{ $action->id }})">Confirm
+                        <button class="btn btn-sm btn-success update mt-1" type="button"
+                                onclick="myConfirm('{{ $action->id }}', '{{ $action->user()->attendee_id }}', '1')">Confirm
+                        </button>
+                    </form>
+                    <form data-id="{{ $action->id }}">
+                        <button class="btn btn-sm btn-warning update mt-1" type="button"
+                                onclick="myConfirm('{{ $action->id }}', '219492931', '0')">Cancel reservation
+                        </button>
+                    </form>
+                @elseif((int) $action->meeting_confirm === 1)
+                    <form data-id="{{ $action->id }}">
+                        <button class="btn btn-sm btn-warning update mt-1" type="button"
+                                onclick="myConfirm('{{ $action->id }}', '219492931', '0')">Cancel reservation
                         </button>
                     </form>
                 @endif
-            </td>
-            <td>
-                <form data-id="{{ $action->id }}">
-                    <button class="btn btn-sm btn-danger update mt-1" type="button"
-                            onclick="myDelete({{ $action->id }})">Delete
-                    </button>
-                </form>
+                    <form data-id="{{ $action->id }}">
+                        <button class="btn btn-sm btn-danger update mt-1" type="button"
+                                onclick="myDelete({{ $action->id }})">Delete
+                        </button>
+                    </form>
             </td>
         </tr>
     @endforeach
     </tbody>
 </table>
 <script>
-    function myConfirm(e) {
-        let id = e;
-        let action = 'confirm';
+    function myConfirm(id, user_id, confirm) {
         let data = {
             id: id,
-            action: action
+            confirm: confirm,
+            user_id: user_id
         };
 
         $.ajax({
@@ -80,18 +95,17 @@
             type: 'post',
             data: data,
             success: function (response) {
-                location.reload();
                 console.log(response);
+                location.reload();
             }
         });
     }
 
-    function myDelete(x) {
-        let id = x;
-        let action = 'delete';
+    function myDelete(id) {
+        if(!confirm('Are you sure? This action will remove the meeting from the event page.')) return;
+
         let data = {
-            id: id,
-            action: action
+            id: id
         };
 
         $.ajax({

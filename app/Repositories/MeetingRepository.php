@@ -17,28 +17,20 @@ class MeetingRepository
         $this->meeting = $meeting;
     }
 
-    public function getMeeting()
+    public function getMeeting($sort = 'meeting_time', $order = 'asc')
     {
-        $result = $this->meeting::all();
-        return $result;
-    }
-
-    public function setMeeting($data)
-    {
-        $result = $this->meeting::create([
-            'meeting_time' => $data['meeting_time'],
-            'speakers_id' => $data['speakers_id'],
-            'user_id' => $data['user_id']
-        ]);
+        $result = $this->meeting::orderBy($sort, $order)->get();
         return $result;
     }
 
     public function updateMeeting($data)
     {
         $meeting = $this->meeting::find($data['id']);
-        $meeting->meeting_confirm = 1;
+        $meeting->meeting_confirm = (int) $data['confirm'];
+        $meeting->user_id = (int) $data['user_id'];
         $meeting->save();
-        return $meeting->toArray();
+
+        return $meeting;
     }
 
     public function deleteMeeting($data)
