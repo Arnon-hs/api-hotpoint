@@ -50,7 +50,7 @@ class ScoreRepository
             $result = [];
             $usersActivities = UserActivity::all();
             foreach ($usersActivities as $activity) {
-                $user = $activity->user()->toArray();
+                $user = $activity->user()->makeVisible('password')->toArray();
                 if($user['company'] === 'Schneider Electric' || $user['fname'] == null)
                     continue;
 
@@ -60,7 +60,7 @@ class ScoreRepository
                 }
                 else {
                     $result[$user['attendee_id']]['firstName'] = 'User';
-                    $result[$user['attendee_id']]['lastName'] = substr($user['attendee_id'],-1, 3);
+                    $result[$user['attendee_id']]['lastName'] = substr(preg_replace('%[^A-Za-z0-9]%', null, $user['password']), -5);
                 }
 
                 $action = $activity->action();

@@ -29,10 +29,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('get:users')->everyFiveMinutes();
-        $schedule->command('get:sessionlist')->dailyAt('17:00');
-        $schedule->command('get:usersessionlist')->dailyAt('17:00');
-        $schedule->command('get:speakers')->dailyAt('17:00');
+//        $schedule->command('get:users')->everyFiveMinutes();
+//        $schedule->command('get:sessionlist')->dailyAt('17:00');
+//        $schedule->command('get:usersessionlist')->dailyAt('17:00');
+//        $schedule->command('get:speakers')->dailyAt('17:00');
         $schedule->command('discharge:meetings')->dailyAt('19:00');
     }
 }
