@@ -4,8 +4,6 @@ namespace App\Services;
 
 use App\Repositories\MeetingRepository;
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class MeetingService
@@ -24,7 +22,21 @@ class MeetingService
     public function getMeeting()
     {
         try {
-            $result = $this->meetingRepository->getMeeting();
+            $result = [];
+            $meetings = $this->meetingRepository->getMeeting();
+            foreach ($meetings as $meeting) {
+                $speaker = $meeting->speaker();
+
+                if(!isset($result[$speaker->speaker_id]['expert']))
+                    $result[$speaker->speaker_id]['expert'] = $speaker->toArray();
+
+                $result[$speaker->speaker_id]['slots'][$meeting->meeting_date][] = [
+                    'id' => (int) $meeting->id,
+                    'time' => $meeting->meeting_time,
+                    'confirm' => (bool) $meeting->meeting_confirm
+                ];
+            }
+            $result = array_values($result);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable get meeting');
@@ -33,14 +45,15 @@ class MeetingService
         return $result;
     }
 
-    public function setMeeting($data)
+    public function all()
     {
         try {
-            $result = $this->meetingRepository->setMeeting($data);
+            $result = $this->meetingRepository->getMeeting('meeting_confirm', 'desc');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            throw new InvalidArgumentException('Unable set meeting');
+            throw new InvalidArgumentException('Unable get meeting');
         }
+
         return $result;
     }
 
@@ -65,5 +78,4 @@ class MeetingService
         }
         return $result;
     }
-
 }

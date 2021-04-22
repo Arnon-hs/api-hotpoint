@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meeting;
 use App\Services\MeetingService;
 use Illuminate\Http\Request;
 
@@ -35,10 +34,30 @@ class MeetingController extends Controller
         return response()->json($result['data'], $result['status']);
     }
 
-    public function setMeeting(Request $request)
+    public function index()
+    {
+        $result = $this->meetingService->all();
+        return view('meeting', compact('result'));
+    }
+
+    public function update(Request $request)
     {
         try {
-            $result = $this->meetingService->setMeeting($request);
+            $result['data'] = $this->meetingService->updateMeeting($request->only(['id', 'confirm', 'user_id']));
+            $result['status'] = 202;
+        } catch (\Exception $e) {
+            $result = [
+                'data' => $e->getMessage(),
+                'status' => 500
+            ];
+        }
+        return response()->json($result['data'], $result['status']);
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $result = $this->meetingService->deleteMeeting($request->only(['id']));
             $result['data'] = $result;
             $result['status'] = 200;
         } catch (\Exception $e) {
@@ -49,45 +68,4 @@ class MeetingController extends Controller
         }
         return response()->json($result['data'], $result['status']);
     }
-
-    public function index()
-    {
-        $result = $this->meetingService->getMeeting();
-        return view('meeting', compact('result'));
-    }
-
-    public function update(Request $request)
-    {
-        if ($request['action'] == 'confirm') {
-            try {
-                $result = $this->meetingService->updateMeeting($request);
-                $result['data'] = $result;
-                $result['status'] = 200;
-            } catch (\Exception $e) {
-                $result = [
-                    'data' => $e->getMessage(),
-                    'status' => 500
-                ];
-            }
-        }
-        return response()->json($result['data'], $result['status']);
-    }
-
-    public function destroy(Request $request)
-    {
-        if ($request['action'] == 'delete') {
-            try {
-                $result = $this->meetingService->deleteMeeting($request);
-                $result['data'] = $result;
-                $result['status'] = 200;
-            } catch (\Exception $e) {
-                $result = [
-                    'data' => $e->getMessage(),
-                    'status' => 500
-                ];
-            }
-        }
-        return response()->json($result['data'], $result['status']);
-    }
-
 }
