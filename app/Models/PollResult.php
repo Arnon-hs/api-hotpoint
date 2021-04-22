@@ -9,6 +9,7 @@ class PollResult extends Model
     protected $fillable = [
         'id', 'user_id', 'answer_id', 'poll_id'
     ];
+
     public $timestamps = false;
     public $table = 'user_answers';
     protected $primaryKey = 'id';

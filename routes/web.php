@@ -43,13 +43,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('speakers', 'SpeakerController@all');
         $router->get('poll', 'PollController@all');
         $router->get('schedule-user', 'SessionController@allPersonal');
-        $router->post('user_answer', 'UserAnswerController@all');
-        $router->get('result-poll', 'PollResultController@getPollResult');
     });
 
-    $router->post('result-poll', 'PollResultController@all');
+    $router->group(['prefix' => 'poll', 'middleware' => 'auth'], function ($router) {
+        $router->get('list', 'PollController@all');
+        $router->post('store', 'PollController@storeUserAnswer');
+        $router->get('result/{poll_id}', 'PollController@getPollResult');
+    });
 
-    $router->group(['prefix' => 'score'], function ($router) {
+    $router->group(['prefix' => 'score'], function ($router) { 
         $router->post('update', 'ScoreController@update');
         $router->post('store', 'ScoreController@store');
         $router->get('rating', 'ScoreController@rating');

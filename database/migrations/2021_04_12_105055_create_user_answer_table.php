@@ -15,7 +15,7 @@ class CreateUserAnswerTable extends Migration
     {
         Schema::create('user_answers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('users_id')->references('attendee_id')->on('users');
+            $table->foreignId('user_id')->references('attendee_id')->on('users');
             $table->foreignId('answer_id')->references('id')->on('answers');
             $table->foreignId('poll_id')->references('id')->on('polls');
         });

@@ -85,7 +85,7 @@ class ScoreController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function rating(Request $request)
+    public function rating()
     {
         try {
             $result['data'] = $this->scoreService->getRating();
