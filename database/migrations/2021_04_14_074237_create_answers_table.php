@@ -16,8 +16,8 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('poll_id')->constrained('polls');
-            $table->unsignedBigInteger('answer_id')->index('answer_id');
             $table->boolean('true_answer');
+            $table->string('answer_title');
         });
     }
 

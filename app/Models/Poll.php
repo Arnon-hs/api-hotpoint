@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Poll extends Model
 {
-//    protected $primaryKey = 'poll_id';
-
+    protected $fillable = [
+        'name'
+    ];
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -24,7 +25,8 @@ class Poll extends Model
      */
     public $timestamps = false;
 
-    public function Answers(){
+    public function answers()
+    {
         return $this->hasMany(Answer::class);
     }
 }
