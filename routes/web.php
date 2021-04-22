@@ -45,6 +45,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('schedule-user', 'SessionController@allPersonal');
     });
 
+    $router->group(['prefix' => 'stream', 'middleware' => 'auth'], function ($router) {
+        $router->get('/{stream_id}', 'LocationController@getStreamSettings');
+    });
+
     $router->group(['prefix' => 'poll', 'middleware' => 'auth'], function ($router) {
         $router->get('list', 'PollController@all');
         $router->post('store', 'PollController@storeUserAnswer');
