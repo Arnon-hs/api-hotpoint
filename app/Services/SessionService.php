@@ -41,29 +41,28 @@ class SessionService
     /**
      * Get Personal User Schedule
      * @return $data
-     *
      */
     public function getSessionsPersonal()
-    {
+    {//todo Repository
         $data = [];
         $sessions = $this->sessionRepository->getSessionsPersonal();
         foreach ($sessions as $key => $session) {
-            if(!isset($result_arr[$session->sessiondate]))
-                $result_arr[$session->sessiondate] = [];
-            $location_pluck = Location::all()->where('location_id',$session->location_id)->pluck('name');
-
-            $explode_speakers = explode(';' ,$session->speaker_ids);//работает,разбивает на масив
             $names = [];
-                DB::table('speakers')->whereIn('speaker_id',$explode_speakers)->get('name')->each(function ($speaker_name) use (&$names){
-                    $names[] = $speaker_name->name;
-                })->toArray();
+
+            $location_name = Location::where('location_id',$session->location_id)->get()->first()->name;
+            $explode_speakers = explode(';' ,$session->speaker_ids);
+
+            DB::table('speakers')->whereIn('speaker_id', $explode_speakers)->get()->each(function ($speaker_name) use (&$names){
+                $names[] = $speaker_name->name;
+            });
+
             $start_time_ex = substr($session->starttime, 0, -3);
             $end_time_ex = substr($session->endtime, 0, -3);
 
             $data[] = [
                 'title' => $session->name,
                 'time' => $start_time_ex . ' - ' . $end_time_ex,
-                'location' => $location_pluck[0],
+                'location' => $location_name,
                 'speakers' => implode(", " , $names)
             ];
         }
