@@ -44,7 +44,11 @@ class SessionService
      */
     public function getSessionsPersonal()
     {//todo Repository
-        $data = [];
+        $data = [
+            [],
+            [],
+            []
+        ];
         $sessions = $this->sessionRepository->getSessionsPersonal();
         foreach ($sessions as $key => $session) {
             $names = [];
@@ -59,12 +63,32 @@ class SessionService
             $start_time_ex = substr($session->starttime, 0, -3);
             $end_time_ex = substr($session->endtime, 0, -3);
 
-            $data[] = [
-                'title' => $session->name,
-                'time' => $start_time_ex . ' - ' . $end_time_ex,
-                'location' => $location_name,
-                'speakers' => implode(", " , $names)
-            ];
+            switch ($session->sessiondate) {
+                case '2021-04-27':
+                    $data[0][] = [
+                        'title' => $session->name,
+                        'time' => $start_time_ex . ' - ' . $end_time_ex,
+                        'location' => $location_name,
+                        'speakers' => implode(", " , $names)
+                    ];
+                    break;
+                case '2021-04-28':
+                    $data[1][] = [
+                        'title' => $session->name,
+                        'time' => $start_time_ex . ' - ' . $end_time_ex,
+                        'location' => $location_name,
+                        'speakers' => implode(", " , $names)
+                    ];
+                    break;
+                case '2021-04-29':
+                    $data[2][] = [
+                        'title' => $session->name,
+                        'time' => $start_time_ex . ' - ' . $end_time_ex,
+                        'location' => $location_name,
+                        'speakers' => implode(", " , $names)
+                    ];
+                    break;
+            }
         }
         return $data;
     }
