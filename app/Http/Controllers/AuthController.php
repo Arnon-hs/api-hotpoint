@@ -75,14 +75,16 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $user = auth()->user();
+        $user = auth()->user()->makeVisible('password')->toArray();
+        $user['nick'] = 'User ' . substr(preg_replace('%[^A-Za-z0-9]%', null, $user['password']), -5);
+        unset($user['password']);
 
         $this->scoreService->storeActivity([
             'title' => 'auth',
-            'attendee_id' => $user->attendee_id
+            'attendee_id' => $user['attendee_id']
         ]);
 
-        $model = User::find($user->attendee_id);
+        $model = User::find($user['attendee_id']);
         $model->confirmShowName = (int) $request->confirmShowName;
         $model->save();
 
