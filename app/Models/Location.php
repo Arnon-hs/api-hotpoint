@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    public function sessions(){
+    public function sessions()
+    {
         return $this->hasMany(Session::class);
     }
 

@@ -43,14 +43,16 @@ class SessionService
      * @return $data
      */
     public function getSessionsPersonal()
-    {
-        $data = $names = [];
+    {//todo Repository
+        $data = [];
         $sessions = $this->sessionRepository->getSessionsPersonal();
         foreach ($sessions as $key => $session) {
-            $location_pluck = Location::where('location_id',$session->location_id)->first()->pluck('name');
+            $names = [];
+
+            $location_name = Location::where('location_id',$session->location_id)->get()->first()->name;
             $explode_speakers = explode(';' ,$session->speaker_ids);
 
-            DB::table('speakers')->whereIn('speaker_id',$explode_speakers)->get('name')->each(function ($speaker_name) use (&$names){
+            DB::table('speakers')->whereIn('speaker_id', $explode_speakers)->get()->each(function ($speaker_name) use (&$names){
                 $names[] = $speaker_name->name;
             });
 
@@ -60,7 +62,7 @@ class SessionService
             $data[] = [
                 'title' => $session->name,
                 'time' => $start_time_ex . ' - ' . $end_time_ex,
-                'location' => $location_pluck,
+                'location' => $location_name,
                 'speakers' => implode(", " , $names)
             ];
         }
