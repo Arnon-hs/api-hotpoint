@@ -43,7 +43,8 @@ class SessionService
                         'title' => $session->name,
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
-                        'speakers' => implode(", " , $names)
+                        'speakers' => implode(", " , $names),
+                        'stream_id' => $streamId
                     ];
                     break;
                 case '2021-04-28':
@@ -51,7 +52,8 @@ class SessionService
                         'title' => $session->name,
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
-                        'speakers' => implode(", " , $names)
+                        'speakers' => implode(", " , $names),
+                        'stream_id' => $streamId
                     ];
                     break;
                 case '2021-04-29':
@@ -59,7 +61,8 @@ class SessionService
                         'title' => $session->name,
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
-                        'speakers' => implode(", " , $names)
+                        'speakers' => implode(", " , $names),
+                        'stream_id' => $streamId
                     ];
                     break;
             }
