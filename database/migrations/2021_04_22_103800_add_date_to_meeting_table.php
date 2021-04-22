@@ -18,6 +18,7 @@ class AddDateToMeetingTable extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *
