@@ -42,7 +42,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['middleware' => 'auth'], function ($router) {
         $router->get('me', 'AuthController@me');
-        $router->get('speakers', 'SpeakerController@all');
         $router->get('poll', 'PollController@all');
         $router->get('schedule-user', 'SessionController@allPersonal');
     });
