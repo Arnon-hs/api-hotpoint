@@ -60,7 +60,22 @@ class MeetingService
     public function updateMeeting($data)
     {
         try {
-            $result = $this->meetingRepository->updateMeeting($data);
+            $res = $this->meetingRepository->updateMeeting($data);
+            $meetings = $this->meetingRepository->getMeeting();
+            $result = [];
+            foreach ($meetings as $meeting) {
+                $speaker = $meeting->speaker();
+
+                if(!isset($result[$speaker->speaker_id]['expert']))
+                    $result[$speaker->speaker_id]['expert'] = $speaker->toArray();
+
+                $result[$speaker->speaker_id]['slots'][$meeting->meeting_date][] = [
+                    'id' => (int) $meeting->id,
+                    'time' => $meeting->meeting_time,
+                    'confirm' => (bool) $meeting->meeting_confirm
+                ];
+            }
+            $result = array_values($result);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable update meeting');
