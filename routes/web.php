@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 $router->get('/score', 'ScoreController@index');
 
-$router->get('/rooms', 'RoomsController@index');
+$router->get('/rooms', 'PollController@index');
 
 $router->get('/meeting', 'MeetingController@index');
 

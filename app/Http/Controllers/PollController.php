@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\Poll;
 use App\Services\PollService;
@@ -16,8 +17,16 @@ class PollController extends Controller
      */
     public function __construct(PollService $pollService)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api',['except' => ['index']]);
         $this->pollService = $pollService;
+    }
+
+    public function index()
+    {
+        $polls = $this->pollService->allPolls();
+        $locations = Location::all();
+
+        return view('rooms', compact('polls', 'locations'));
     }
 
     /**
