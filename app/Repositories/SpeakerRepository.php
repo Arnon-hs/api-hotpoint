@@ -15,6 +15,6 @@ class SpeakerRepository
 
     public function getSpeakers()
     {
-        return $speakers = $this->speaker::all()->toArray();
+        return Speaker::orderBy('sort', 'asc')->get()->toArray();
     }
 }

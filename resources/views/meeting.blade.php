@@ -37,7 +37,7 @@
             <th scope="row">{{ $action->id }}</th>
             <td>{{ $action->speaker()->name }}</td>
             <td>
-                @if($action->user()->attendee_id === 219492931)
+                @if(empty($action->user_id))
                     User not known yet
                 @else
                     {{ $action->user()->fname }} {{ $action->user()->lname }}<br>{{ $action->user()->email }}
