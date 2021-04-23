@@ -4,10 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\ClientRepository;
-use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ClientService
@@ -176,7 +173,7 @@ class ClientService
     {
         try{
             $time        = time();
-            $secret      = "Proofix444"; // Секретный ключ, который Вы ввели в административной панели сайта.
+            $secret      = "Proofix444secretkey"; // Секретный ключ, который Вы ввели в административной панели сайта.
             $user_base64 = base64_encode( json_encode([
                 'nick' => $data['fname'].' '.$data['lname'],
                 'email' => $data['email'],

@@ -100,7 +100,9 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user()->toArray();
+        $auth = $this->clientService->getAuthHCC($user);
+        return response()->json(array_merge($user, compact('auth')));
     }
 
     /**
