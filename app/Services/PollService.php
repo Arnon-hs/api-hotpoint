@@ -21,6 +21,18 @@ class PollService
         $this->pollRepository = $pollRepository;
     }
 
+    public function allPolls()
+    {
+        try {
+            $result = $this->pollRepository->allPolls();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable get polls');
+        }
+
+        return $result;
+    }
+
     /**
      * @param $poll_id
      * @return mixed

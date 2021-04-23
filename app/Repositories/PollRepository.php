@@ -7,15 +7,21 @@ use App\Models\PollResult;
 
 class PollRepository
 {
-    protected $pollResult;
+    protected $pollResult,$poll;
 
     /**
      * PollRepository constructor.
      * @param $pollResult
      */
-    public function __construct(PollResult $pollResult)
+    public function __construct(PollResult $pollResult, Poll $poll)
     {
         $this->pollResult = $pollResult;
+        $this->poll = $poll;
+    }
+
+    public function allPolls()
+    {
+        return $this->poll::all();
     }
 
     /**

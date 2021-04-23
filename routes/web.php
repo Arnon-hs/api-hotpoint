@@ -16,6 +16,8 @@ $router->get('/', function () use ($router) {
 });
 $router->get('/score', 'ScoreController@index');
 
+$router->get('/rooms', 'RoomsController@index');
+
 $router->get('/meeting', 'MeetingController@index');
 
 $router->group(['prefix' => 'api'], function () use ($router) {
@@ -56,7 +58,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('result/{poll_id}', 'PollController@getPollResult');
     });
 
-    $router->group(['prefix' => 'score'], function ($router) { 
+    $router->group(['prefix' => 'score'], function ($router) {
         $router->post('update', 'ScoreController@update');
         $router->post('store', 'ScoreController@store');
         $router->get('show', 'ScoreController@score');
