@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Speaker;
+use Illuminate\Support\Facades\DB;
 
 class SpeakerRepository
 {
@@ -15,6 +16,6 @@ class SpeakerRepository
 
     public function getSpeakers()
     {
-        return Speaker::orderBy('sort', 'asc')->get()->toArray();
+        return DB::table('speakers')->select()->where('show', 1)->orderBy('sort', 'asc')->get();
     }
 }
