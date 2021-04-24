@@ -72,11 +72,11 @@
                         </button>
                     </form>
                 @endif
-                    <form data-id="{{ $action->id }}">
-                        <button class="btn btn-sm btn-danger update mt-1" type="button"
-                                onclick="myDelete({{ $action->id }})">Delete
-                        </button>
-                    </form>
+                    {{--<form data-id="{{ $action->id }}">--}}
+                        {{--<button class="btn btn-sm btn-danger update mt-1" type="button"--}}
+                                {{--onclick="myDelete({{ $action->id }})">Delete--}}
+                        {{--</button>--}}
+                    {{--</form>--}}
             </td>
         </tr>
     @endforeach
@@ -102,23 +102,23 @@
         });
     }
 
-    function myDelete(id) {
-        if(!confirm('Are you sure? This action will remove the meeting from the event page.')) return;
+    {{--function myDelete(id) {--}}
+        {{--if(!confirm('Are you sure? This action will remove the meeting from the event page.')) return;--}}
 
-        let data = {
-            id: id
-        };
+        {{--let data = {--}}
+            {{--id: id--}}
+        {{--};--}}
 
-        $.ajax({
-            url: "{{env('APP_URL').'/api/meeting/delete'}}",
-            type: 'post',
-            data: data,
-            success: function (response) {
-                console.log(response);
-                location.reload();
-            }
-        });
-    }
+        {{--$.ajax({--}}
+            {{--url: "{{env('APP_URL').'/api/meeting/delete'}}",--}}
+            {{--type: 'post',--}}
+            {{--data: data,--}}
+            {{--success: function (response) {--}}
+                {{--console.log(response);--}}
+                {{--location.reload();--}}
+            {{--}--}}
+        {{--});--}}
+    {{--}--}}
 </script>
 </body>
 </html>
