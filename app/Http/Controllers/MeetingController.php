@@ -43,7 +43,7 @@ class MeetingController extends Controller
     public function update(Request $request)
     {
         try {
-            $result['data'] = $this->meetingService->updateMeeting($request->only(['id', 'confirm', 'user_id']));
+            $result['data'] = $this->meetingService->updateMeeting($request->only(['id', 'confirm', 'user_id', 'role']));
             $result['status'] = 202;
         } catch (\Exception $e) {
             $result = [

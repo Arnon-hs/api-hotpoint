@@ -24,13 +24,29 @@ class MeetingRepository
     }
 
     public function updateMeeting($data)
-    {
+    {//todo
         $meeting = $this->meeting::find($data['id']);
-        $meeting->meeting_confirm = (int) $data['confirm'];
-        $meeting->user_id = (int) $data['user_id'];
-        $meeting->save();
 
-        return $meeting;
+        if (!isset($data['role']))
+            $data['role'] = 'user';
+
+        if((string) $data['role'] !== 'moderator'){
+            if ((int) $meeting->meeting_confirm > 0)//todo || (!isset($data['role']) && (string) $data['role'] !== 'moderator')
+                return false;
+
+            $meeting->meeting_confirm = (int) $data['confirm'];
+            $meeting->user_id = (int) $data['user_id'];
+            $meeting->save();
+
+            return true;
+        }
+        else {
+            $meeting->meeting_confirm = (int) $data['confirm'];
+            $meeting->user_id = (int) $data['user_id'];
+            $meeting->save();
+
+            return true;
+        }
     }
 
     public function deleteMeeting($data)

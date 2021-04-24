@@ -87,7 +87,8 @@
         let data = {
             id: id,
             confirm: confirm,
-            user_id: user_id
+            user_id: user_id,
+            role: 'moderator'
         };
 
         $.ajax({

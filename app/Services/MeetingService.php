@@ -59,26 +59,27 @@ class MeetingService
 
     public function updateMeeting($data)
     {
-        try {
-            $res = $this->meetingRepository->updateMeeting($data);
+        try {//todo validate
+            $isUpdate = $this->meetingRepository->updateMeeting($data);
             $meetings = $this->meetingRepository->getMeeting();
             $result = [];
             foreach ($meetings as $meeting) {
                 $speaker = $meeting->speaker();
 
-                if(!isset($result[$speaker->speaker_id]['expert']))
-                    $result[$speaker->speaker_id]['expert'] = $speaker->toArray();
+                if(!isset($result['data'][$speaker->speaker_id]['expert']))
+                    $result['data'][$speaker->speaker_id]['expert'] = $speaker->toArray();
 
-                $result[$speaker->speaker_id]['slots'][$meeting->meeting_date][] = [
+                $result['data'][$speaker->speaker_id]['slots'][$meeting->meeting_date][] = [
                     'id' => (int) $meeting->id,
                     'time' => $meeting->meeting_time,
                     'confirm' => (bool) $meeting->meeting_confirm
                 ];
             }
-            $result = array_values($result);
+            $result['data'] = array_values($result['data']);
+            $result['status'] = $isUpdate ? 'success' : 'error';
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            throw new InvalidArgumentException('Unable update meeting');
+            throw new InvalidArgumentException('Unable update meeting'.PHP_EOL.$e->getMessage());
         }
         return $result;
     }
