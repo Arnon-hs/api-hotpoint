@@ -55,6 +55,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'poll', 'middleware' => 'auth'], function ($router) {
         $router->get('list', 'PollController@all');
         $router->post('store', 'PollController@storeUserAnswer');
+        $router->post('/evaluation/store', 'PollController@storeUserEvaluation');
         $router->get('result/{poll_id}', 'PollController@getPollResult');
     });
 

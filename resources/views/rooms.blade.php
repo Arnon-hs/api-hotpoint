@@ -26,16 +26,17 @@
     <div class="tab-content" id="nav-tabContent">
         @foreach($locations as $key => $location)
             <div class="tab-pane fade show {{$key === 0 ?'active':''}}" id="nav-{{$location->location_id}}" role="tabpanel" aria-labelledby="nav-{{$location->location_id}}-tab">
-                @foreach($polls as $poll)
+                @foreach($polls as $poll_key => $poll)
                     <div class="col-md-12 m-3 text-center">
                         <a href="https://live.proofix.tv/shnaider/interactive-control.php?event=shnaider&id_room={{$location->location_id}}&setstatus={{$poll->id}}" class="btn btn-primary btn-lg">{{$poll->name}}</a>
+                        @if($poll_key === (count($polls) - 1))
+                            <a href="https://live.proofix.tv/shnaider/interactive-control.php?event=shnaider&id_room={{$location->location_id}}&setstatus=100" style="font-size:24px;padding: 10px; padding-left: 15%;padding-right: 15%; margin-top: 1rem" class="btn btn-warning">Оценка сессии</a>
+                            <a href="https://live.proofix.tv/shnaider/interactive-control.php?event=shnaider&id_room={{$location->location_id}}&setstatus=0" style="font-size:24px;padding: 10px;padding-left: 15%;padding-right: 15%;margin-top: 1rem" class="btn btn-danger">Скрыть</a>
+                        @endif
                     </div>
                 @endforeach
             </div>
         @endforeach
-            <div class="mt-3 text-center">
-            <a href="https://live.proofix.tv/shnaider/interactive-control.php?event=shnaider&id_room={{$location->location_id}}&setstatus=0" style="font-size:24px;padding: 10px;padding-left: 15%;padding-right: 15%;" class="btn btn-danger">Скрыть</a>
-        </div>
     </div>
 </main>
 

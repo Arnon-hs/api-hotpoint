@@ -8,6 +8,7 @@
         "php": "^7.2.5",
         "chuckrincon/lumen-config-discover": "^1.0",
         "doctrine/dbal": "2.*",
+        "google/apiclient": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
         "illuminate/redis": "^7",
         "laravel/lumen-framework": "^7.0",

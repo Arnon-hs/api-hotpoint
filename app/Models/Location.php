@@ -21,6 +21,7 @@ class Location extends Model
      * @var string
      */
     public $table = 'locations';
+    public $primaryKey = 'location_id';
     
     public function sessions()
     {

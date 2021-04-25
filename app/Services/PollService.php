@@ -88,4 +88,24 @@ class PollService
         }
         return $result;
     }
+
+    public function storeUserEvaluation($data)
+    {
+        try {
+            $validate = Validator::make($data, [
+                'stream_id' => 'required|exists:locations,stream_id',
+                'rating' => 'required|numeric',
+                'text' => 'min:2|max:255'
+            ]);
+
+            if ($validate->fails())
+                throw new InvalidArgumentException($validate->errors());
+
+            $evaluation = $this->pollRepository->storeUserEvaluation($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new InvalidArgumentException('Unable store evaluation, '.$e->getMessage());
+        }
+        return $evaluation;
+    }
 }

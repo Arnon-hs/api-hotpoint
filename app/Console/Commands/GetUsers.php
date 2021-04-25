@@ -49,30 +49,35 @@ class GetUsers extends Command
     public function handle()
     {
         try {
-            DB::table('users')->delete();
-
-            $users = $this->clientService->getUsers();
-
-            if(empty($users))
-                return 'Users is empty!';
-
-            foreach ($users as $user) {
-                User::create([
-                    'fname' => $user->fname,
-                    'mname' => $user->mname,
-                    'lname' => $user->lname,
-                    'mphone' => $user->mphone,
-                    'city' => $user->city,
-                    'company' => $user->company,
-                    'email' => $user->email,
-                    'attendee_id' => $user->attendeeid,
-                    'password' => app('hash')->make($user->attendeeid),
-                    'confirmShowName' => 0
-                ]);
+            $users = User::whereNull('password')->get();
+            foreach ($users as $user){
+                $user->password = app('hash')->make($user->attendee_id);
+                $user->save();
             }
-            return 'Complete! Users successfully added to Database.' . PHP_EOL;
+//            DB::table('users')->delete();
+//
+//            $users = $this->clientService->getUsers();
+//
+//            if(empty($users))
+//                return 'Users is empty!';
+//
+//            foreach ($users as $user) {
+//                User::create([
+//                    'fname' => $user->fname,
+//                    'mname' => $user->mname,
+//                    'lname' => $user->lname,
+//                    'mphone' => $user->mphone,
+//                    'city' => $user->city,
+//                    'company' => $user->company,
+//                    'email' => $user->email,
+//                    'attendee_id' => $user->attendeeid,
+//                    'password' => app('hash')->make($user->attendeeid),
+//                    'confirmShowName' => 0
+//                ]);
+//            }
+            echo 'Complete!' . PHP_EOL;
         } catch (\Exception $e) {
-            return $e->getMessage() . PHP_EOL;
+            echo $e->getMessage() . PHP_EOL;
         }
     }
 }

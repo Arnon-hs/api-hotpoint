@@ -40,7 +40,7 @@
                 @if(empty($action->user_id))
                     User not known yet
                 @else
-                    {{ $action->user()->fname }} {{ $action->user()->lname }}<br>{{ $action->user()->email }}
+                    {{ $action->user()->fname }} {{ $action->user()->lname }}<br>{{ $action->user()->email }}<br>{{ $action->user()->mphone }}<br>{{ $action->user()->company }}<br>{{ $action->user()->city }}
                 @endif
             </td>
             <td>{{ $action->meeting_time }}</td>
@@ -54,7 +54,7 @@
                 @endif
             </td>
             <td>
-                @if((int) $action->meeting_confirm === 2)
+                @if((int) $action->meeting_confirm === 2 && !empty($action->user()))
                     <form data-id="{{ $action->id }}">
                         <button class="btn btn-sm btn-success update mt-1" type="button"
                                 onclick="myConfirm('{{ $action->id }}', '{{ $action->user()->attendee_id }}', '1')">Confirm
