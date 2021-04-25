@@ -66,7 +66,8 @@ class GetUsers extends Command
                     'company' => $user->company,
                     'email' => $user->email,
                     'attendee_id' => $user->attendeeid,
-                    'password' => app('hash')->make($user->attendeeid)
+                    'password' => app('hash')->make($user->attendeeid),
+                    'confirmShowName' => 0
                 ]);
             }
             return 'Complete! Users successfully added to Database.' . PHP_EOL;

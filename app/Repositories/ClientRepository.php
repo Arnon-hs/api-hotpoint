@@ -71,6 +71,7 @@ class ClientRepository
             $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/attendeelist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token);
             $users = json_decode($response->getBody())->ResultSet;
         }catch (\Exception $e) {
+            echo $e->getMessage();
             $users = null;
         }
 

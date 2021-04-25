@@ -67,7 +67,7 @@ class GetSessionList extends Command
                         'session_id' => $session->sessionid,
                         'speaker_ids' => implode(';', $speaker_ids),
                         'sort' => $session->sort,
-                        'name' => $session->name,//mb_convert_encoding(,'UTF-8','HTML-ENTITIES')
+                        'name' => mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'),//mb_convert_encoding(,'UTF-8','HTML-ENTITIES')
 //                    'name' => mb_detect_encoding($session->name, 'HTML-ENTITIES')? mb_convert_encoding($session->name,'UTF-8','HTML-ENTITIES'): $session->name ,
                         'sessiondate' => $session->sessiondate,
                         'starttime' => $session->starttime,
