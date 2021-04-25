@@ -25,8 +25,9 @@ class SessionService
             []
         ];
         foreach ($sessions as $key => $session) {
+            if ($session->location_id == '200270528') continue;
             $names = [];
-
+            
             $location_name = Location::where('location_id',$session->location_id)->get()->first()->name;
             $streamId = Location::where('location_id',$session->location_id)->get()->first()->stream_id;
             $explode_speakers = explode(';' ,$session->speaker_ids);
