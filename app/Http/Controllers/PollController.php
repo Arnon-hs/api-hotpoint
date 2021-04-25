@@ -67,6 +67,34 @@ class PollController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeUserEvaluation(Request $request)
+    {
+        try { //todo
+            $data = $request->only(['stream_id', 'text', 'rating']);
+
+            if($this->pollService->storeUserEvaluation($data)) {
+                $result['status'] = 200;
+                $result['data']['data'] = 'Data successfully entered!';
+                $result['data']['status'] = 'success';
+            }
+            else{
+                $result['status'] = 500;
+                $result['data']['data'] = 'Unable store evaluation';
+                $result['data']['status'] = 'error';
+            }
+        } catch (\Exception $e) {
+            $result = [
+                'data' => $e->getMessage(),
+                'status' => 500
+            ];
+        }
+        return response()->json($result['data'], $result['status']);
+    }
+
+    /**
      * @param $poll_id
      * @return \Illuminate\Http\JsonResponse
      */

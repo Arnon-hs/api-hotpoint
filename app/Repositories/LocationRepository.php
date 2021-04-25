@@ -15,7 +15,7 @@ class LocationRepository
     
     public function getLocationSetting($stream_id)
     {
-       $streamSetting = $this->location::where('stream_id', $stream_id)->get();
+        $streamSetting = $this->location::where('stream_id', $stream_id)->get();
         return $streamSetting;
     }
 }

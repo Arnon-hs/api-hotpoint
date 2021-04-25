@@ -8,7 +8,7 @@ use App\Services\LocationService;
 
 class LocationController extends Controller
 {
-    protected $LocationService;
+    protected $locationService;
     
     /**
      * LocationController constructor.
