@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Action;
 use App\Models\Meeting;
+use App\Models\UserActivity;
 
 class MeetingRepository
 {
@@ -44,6 +46,13 @@ class MeetingRepository
             $meeting->meeting_confirm = (int) $data['confirm'];
             $meeting->user_id = (int) $data['user_id'];
             $meeting->save();
+
+            $data = [
+                'title' => 'meeting',
+                'attendee_id' => $data['user_id']
+            ];
+            $scoreRepository = new ScoreRepository(new Action());
+            $scoreRepository->storeActivity($data);
 
             return true;
         }
