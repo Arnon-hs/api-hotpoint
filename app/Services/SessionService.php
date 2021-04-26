@@ -99,7 +99,7 @@ class SessionService
 
             switch ($session->sessiondate) {
                 case '2021-04-27':
-                    $result[0][] = [
+                    $data[0][] = [
                         'title' => $session->name,
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
@@ -108,7 +108,7 @@ class SessionService
                     ];
                     break;
                 case '2021-04-28':
-                    $result[1][] = [
+                    $data[1][] = [
                         'title' => $session->name,
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
@@ -117,7 +117,7 @@ class SessionService
                     ];
                     break;
                 case '2021-04-29':
-                    $result[2][] = [
+                    $data[2][] = [
                         'title' => $session->name,
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
