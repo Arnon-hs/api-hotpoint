@@ -98,16 +98,41 @@ class ClientRepository
 
     /**
      * Get Session Personal List
-     * @param $token
+     * @param $token, $page, $data
      * @return array|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getSessionPersonalList($token)
+    public function getSessionPersonalList($token, $page = 1, $data = [])
     {
         try{
-            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/regsessionlist/'.env('ACCOUNT_ID').'/'.env('EVENT_ID').'?accesstoken='.$token);
+            do {
+                $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/regsessionlist/' . env('ACCOUNT_ID') . '/' . env('EVENT_ID') . '?accesstoken=' . $token.'&pageNumber='.$page.'&pageSize=500');
+                $sessionList = json_decode($response->getBody())->ResultSet;
+                $data = array_merge($data, $sessionList);
+                $page++;
+                var_dump(count($data));
+            } while(!empty($sessionList));
+        }catch (\Exception $e) {
+            echo $e->getMessage();
+            $this->getSessionPersonalList($token, $page, $data);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get Session Personal List
+     * @param $token, $id
+     * @return array|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getSessionPersonalListById($token, $id)
+    {
+        try{
+            $response = $this->client->request('GET', 'https://api-emea.eventscloud.com/api/ds/v1/regsessionlist/' . env('ACCOUNT_ID') . '/' . env('EVENT_ID') . '?accesstoken=' . $token.'&attendeeid='.$id);
             $sessionList = json_decode($response->getBody())->ResultSet;
         }catch (\Exception $e) {
+            echo $e->getMessage();
             $sessionList = null;
         }
 

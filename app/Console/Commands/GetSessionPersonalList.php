@@ -53,7 +53,7 @@ class GetSessionPersonalList extends Command
 
             $sessionList = $this->clientService->getSessionPersonalList();
             if(empty($sessionList))
-                return 'Session personal list is empty';
+                exit('Session personal list is empty');
 
             foreach ($sessionList as $session) {
                 try {
@@ -66,9 +66,9 @@ class GetSessionPersonalList extends Command
                 }
             }
 
-            return 'Complete! Session personal list successfully added to Database.' . PHP_EOL;
+            echo 'Complete! Session personal list successfully added to Database.' . PHP_EOL;
         } catch (\Exception $e) {
-            return $e->getMessage() . PHP_EOL;
+            echo $e->getMessage() . PHP_EOL;
         }
     }
 }

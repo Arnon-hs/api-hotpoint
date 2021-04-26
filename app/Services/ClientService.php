@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserSession;
 use App\Repositories\ClientRepository;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Log;
@@ -107,6 +108,7 @@ class ClientService
     {
         try{
             $result = $this->clientRepository->getSessionPersonalList($this->token);
+//            dd(count($result));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable get session personal list');
@@ -156,6 +158,13 @@ class ClientService
                     'city' => $user['city'],
                     'company' => $user['company']
                 ]);
+            $sessionList = $this->clientRepository->getSessionPersonalListById($this->token, $id);
+            foreach ($sessionList as $session) {
+                UserSession::create([
+                    'user_id' => $session->attendeeid,
+                    'session_id' => $session->sessionid
+                ]);
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable set user data');
