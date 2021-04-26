@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PollResult extends Model
 {
     protected $fillable = [
-        'id', 'user_id', 'answer_id', 'poll_id'
+        'id', 'user_id', 'answer_id', 'poll_id', 'time'
     ];
 
     public $timestamps = false;

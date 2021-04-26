@@ -52,7 +52,7 @@ class PollController extends Controller
     public function storeUserAnswer(Request $request)
     {
         try {
-            $data = $request->only(['poll_id', 'answer_id']);
+            $data = $request->only(['poll_id', 'answer_id', 'time']);
             $result = $this->pollService->storeUserAnswer($data);
 
             $result['data'] = $result;
@@ -110,5 +110,33 @@ class PollController extends Controller
             ];
         }
         return response()->json($pollResult['data'], $pollResult['status']);
+    }
+
+    public function getPollResultBefore($poll_id)
+    {
+        try {
+            $pollResultBefore['data'] = $this->pollService->getPollResultBefore($poll_id);
+            $pollResultBefore['status'] = 200;
+        } catch (\Exception $e) {
+            $pollResultBefore = [
+                'data' => $e->getMessage(),
+                'status' => 500
+            ];
+        }
+        return response()->json($pollResultBefore['data'], $pollResultBefore['status']);
+    }
+
+    public function getPollResultAfter($poll_id)
+    {
+        try {
+            $pollResultAfter['data'] = $this->pollService->getPollResultAfter($poll_id);
+            $pollResultAfter['status'] = 200;
+        } catch (\Exception $e) {
+            $pollResultAfter = [
+                'data' => $e->getMessage(),
+                'status' => 500
+            ];
+        }
+        return response()->json($pollResultAfter['data'], $pollResultAfter['status']);
     }
 }

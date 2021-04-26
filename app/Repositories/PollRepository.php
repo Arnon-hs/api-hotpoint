@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Location;
 use App\Models\Poll;
 use App\Models\PollResult;
+use Illuminate\Support\Facades\DB;
 
 class PollRepository
 {
@@ -36,6 +37,36 @@ class PollRepository
     }
 
     /**
+     * @param $poll_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function getPollResultBefore($poll_id)
+    {
+        date_default_timezone_set('Europe/Moscow');
+        $pollResultBefore = DB::table('user_answers')
+            ->where('poll_id', 10)
+            ->whereTime('time', '<=', '2021-04-29 17:30:00')
+            ->get();
+//        dd($pollResultBefore);
+        return $pollResultBefore;
+    }
+
+    /**
+     * @param $poll_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function getPollResultAfter($poll_id)
+    {
+        date_default_timezone_set('Europe/Moscow');
+        $pollResultAfter = DB::table('user_answers')
+            ->where('poll_id', $poll_id)
+            ->whereTime('time', '>', '2021-04-29 17:30:00')
+            ->get();
+//        dd($pollResultAfter);
+        return $pollResultAfter;
+    }
+
+    /**
      * @param $data
      * @return PollResult|null
      */
@@ -43,7 +74,7 @@ class PollRepository
     {
         try {
             $pollResult = new PollResult();
-            $pollResult->user_id = auth()->user()->attendee_id;
+            $pollResult->user_id = 219493737;//auth()->user()->attendee_id;
             $pollResult->answer_id = $data['answer_id'];
             $pollResult->poll_id = $data['poll_id'];
             $pollResult->save();
@@ -52,7 +83,6 @@ class PollRepository
         } catch (\Exception $e){
             throw new \InvalidArgumentException($e->getMessage());
         }
-
         return $result;
     }
 
