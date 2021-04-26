@@ -26,7 +26,7 @@
             <th scope="col">ID</th>
             <th scope="col">Speaker</th>
             <th scope="col">User</th>
-            <th scope="col">Meeting time</th>
+            <th scope="col">Meeting datetime</th>
             <th scope="col">Meeting status</th>
             <th scope="col">Actions</th>
         </tr>
@@ -43,7 +43,7 @@
                     {{ $action->user()->fname }} {{ $action->user()->lname }}<br>{{ $action->user()->email }}<br>{{ $action->user()->mphone }}<br>{{ $action->user()->company }}<br>{{ $action->user()->city }}
                 @endif
             </td>
-            <td>{{ $action->meeting_time }}</td>
+            <td>{{ $action->meeting_date }}<br>{{ $action->meeting_time }}</td>
             <td>
                 @if((int) $action->meeting_confirm === 0)
                     Empty slot
