@@ -28,4 +28,9 @@ class Location extends Model
         return $this->hasMany(Session::class);
     }
 
+    public function polls()
+    {
+        return $this->hasMany(Poll::class, 'location_id', 'location_id');
+    }
+
 }

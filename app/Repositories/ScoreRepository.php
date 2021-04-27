@@ -33,7 +33,7 @@ class ScoreRepository
     {
         $action = $this->action::where('title', $data['title'])->get()->first();
 
-        if(UserActivity::where(['action_id' => $action->id, 'attendee_id' => $data['attendee_id']])->get()->first())
+        if(UserActivity::where(['action_id' => $action->id, 'attendee_id' => $data['attendee_id']])->get()->first() && !in_array($action->id, [4, 5]))
             return 'Data already entered!';
 
         $userActivity = new UserActivity();
