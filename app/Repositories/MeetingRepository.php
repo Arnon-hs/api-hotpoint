@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Action;
 use App\Models\Meeting;
+use App\Models\UserActivity;
 
 class MeetingRepository
 {
