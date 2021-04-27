@@ -45,7 +45,8 @@ class SessionService
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
                         'speakers' => implode(", " , $names),
-                        'stream_id' => $streamId
+                        'stream_id' => $streamId,
+                        'timemarker' => $session->timemark
                     ];
                     break;
                 case '2021-04-28':
@@ -54,7 +55,8 @@ class SessionService
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
                         'speakers' => implode(", " , $names),
-                        'stream_id' => $streamId
+                        'stream_id' => $streamId,
+                        'timemarker' => $session->timemark
                     ];
                     break;
                 case '2021-04-29':
@@ -63,7 +65,8 @@ class SessionService
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
                         'speakers' => implode(", " , $names),
-                        'stream_id' => $streamId
+                        'stream_id' => $streamId,
+                        'timemarker' => $session->timemark
                     ];
                     break;
             }
