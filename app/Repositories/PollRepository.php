@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Models\Answer;
 use App\Models\Location;
 use App\Models\Poll;
 use App\Models\PollResult;
+use App\Models\UserAnswer;
 
 class PollRepository
 {
@@ -42,17 +44,18 @@ class PollRepository
     public function storeUserAnswer($data)
     {
         try {
-            $pollResult = new PollResult();
-            $pollResult->user_id = auth()->user()->attendee_id;
-            $pollResult->answer_id = $data['answer_id'];
-            $pollResult->poll_id = $data['poll_id'];
-            $pollResult->save();
+            foreach ($data['answer_id'] as $answer_id) {
+                $pollResult = new PollResult();
+                $pollResult->user_id = auth()->user()->attendee_id;
+                $pollResult->answer_id = $answer_id;
+                $pollResult->poll_id = $data['poll_id'];
+                $pollResult->save();
 
-            $result = $pollResult->fresh();
+                $result = $pollResult->fresh();
+            }
         } catch (\Exception $e){
             throw new \InvalidArgumentException($e->getMessage());
         }
-
         return $result;
     }
 
@@ -87,6 +90,29 @@ class PollRepository
     }
 
     /**
+     * Запись ответа на открытый вопрос
+     * @param $data
+     * @return mixed
+     */
+    public function storeUserAnswerOpen($data)
+    {
+        try {
+            $pollResult = new PollResult();
+            $pollResult->user_id = auth()->user()->attendee_id;
+            $pollResult->message = $data['answer_text'];
+            $pollResult->poll_id = $data['poll_id'];
+            $pollResult->answer_id = isset($data['answer_id'][0]) && !empty($data['answer_id'][0]) ? $data['answer_id'][0] : 355;
+            $pollResult->save();
+
+            $result = $pollResult->fresh();
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException($e->getMessage());
+        }
+
+        return $result;
+    }
+
+    /**
      * @param $poll_id
      * @return bool
      */
@@ -102,5 +128,35 @@ class PollRepository
         });
 
         return (bool) $isQuiz;
+    }
+
+    /**
+     * is Open Question
+     * @param $poll_id
+     * @return bool
+     */
+    public function isOpenQuestion($poll_id)
+    {
+        return (bool) Poll::find($poll_id)->getMessage;
+    }
+
+    public function countCorrectUserAnswers($poll_id)
+    {
+        //уже впадлу думать и делать красиво, лишь бы работало
+        try {
+            $count = 0;
+            $userAnswers = UserAnswer::where('poll_id', $poll_id)->get();
+            $correctAnswers = Answer::where(['poll_id' => $poll_id, 'true_answer' => 1])->get();
+            foreach ($userAnswers as $userAnswer) {
+                foreach ($correctAnswers as $correctAnswer) {
+                    if($userAnswer->answer_id === $correctAnswer->id)
+                        $count++;
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException($e->getMessage());
+        }
+
+        return $count;
     }
 }
