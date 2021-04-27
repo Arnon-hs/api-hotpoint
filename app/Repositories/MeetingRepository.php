@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Action;
 use App\Models\Meeting;
 
 class MeetingRepository
@@ -39,11 +40,18 @@ class MeetingRepository
             $meeting->save();
 
             return true;
-        }
-        else {
+        } else {
             $meeting->meeting_confirm = (int) $data['confirm'];
             $meeting->user_id = (int) $data['user_id'];
             $meeting->save();
+
+            if((int) $data['confirm'] === 1) {
+                $scoreRepository = new ScoreRepository(new Action());
+                $scoreRepository->storeActivity([
+                    'title' => 'meeting',
+                    'attendee_id' => (int) $data['user_id']
+                ]);
+            }
 
             return true;
         }
