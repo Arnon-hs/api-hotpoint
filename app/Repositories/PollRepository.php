@@ -68,7 +68,6 @@ class PollRepository
     {
         try {
             $location_name = Stream::where('id', $data['stream_id'])->get()->first()->location()->name;
-            dd($location_name);
             $user = auth()->user();
 
             $client = new \Google_Client();
