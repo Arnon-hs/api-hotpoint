@@ -48,8 +48,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('schedule-user', 'SessionController@allPersonal');
     });
 
-    $router->group(['prefix' => 'stream', 'middleware' => 'auth'], function ($router) {
-        $router->get('/{stream_id}', 'LocationController@getStreamSettings');
+    $router->group(['prefix' => 'stream'], function ($router) {
+        $router->group(['middleware' => 'auth'], function ($router) {
+            $router->get('/{stream_id}', 'StreamController@getStreamSettings');
+        });
+        $router->get('/marks/{stream_id}', 'StreamController@getTimeMarks');
     });
 
     $router->group(['prefix' => 'poll', 'middleware' => 'auth'], function ($router) {

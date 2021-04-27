@@ -79,9 +79,9 @@ class MeetingService
             $result['status'] = $isUpdate ? 'success' : 'error';
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            throw new InvalidArgumentException('Unable update meeting'.PHP_EOL.$e->getMessage());
+            throw new InvalidArgumentException('Unable update meeting '.$e->getMessage());
         }
-        return $result;
+        return $result; 
     }
 
     public function deleteMeeting($data)

@@ -44,7 +44,7 @@ class MeetingController extends Controller
     {
         try {
             $result['data'] = $this->meetingService->updateMeeting($request->only(['id', 'confirm', 'user_id', 'role']));
-            $result['status'] = 202;
+            $result['status'] = 200;
         } catch (\Exception $e) {
             $result = [
                 'data' => $e->getMessage(),

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Location;
+use App\Models\Stream;
 use App\Repositories\SessionRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +30,7 @@ class SessionService
             $names = [];
             
             $location_name = Location::where('location_id',$session->location_id)->get()->first()->name;
-            $streamId = Location::where('location_id',$session->location_id)->get()->first()->stream_id;
+            $streamId = Stream::where(['location_id' => $session->location_id, 'date' => $session->sessiondate])->get()->first()->id;
             $explode_speakers = explode(';' ,$session->speaker_ids);
 
             DB::table('speakers')->whereIn('speaker_id', $explode_speakers)->get()->each(function ($speaker_name) use (&$names){
@@ -45,7 +46,8 @@ class SessionService
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
                         'speakers' => implode(", " , $names),
-                        'stream_id' => $streamId
+                        'stream_id' => $streamId,
+                        'timemarker' => $session->timemark
                     ];
                     break;
                 case '2021-04-28':
@@ -54,7 +56,8 @@ class SessionService
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
                         'speakers' => implode(", " , $names),
-                        'stream_id' => $streamId
+                        'stream_id' => $streamId,
+                        'timemarker' => $session->timemark
                     ];
                     break;
                 case '2021-04-29':
@@ -63,7 +66,8 @@ class SessionService
                         'time' => $start_time_ex . ' - ' . $end_time_ex,
                         'location' => $location_name,
                         'speakers' => implode(", " , $names),
-                        'stream_id' => $streamId
+                        'stream_id' => $streamId,
+                        'timemarker' => $session->timemark
                     ];
                     break;
             }
@@ -87,7 +91,7 @@ class SessionService
             $names = [];
 
             $location_name = Location::where('location_id',$session->location_id)->get()->first()->name;
-            $streamId = Location::where('location_id',$session->location_id)->get()->first()->stream_id;
+            $streamId = Stream::where(['location_id' => $session->location_id, 'date' => $session->sessiondate])->get()->first()->id;
             $explode_speakers = explode(';' ,$session->speaker_ids);
 
             DB::table('speakers')->whereIn('speaker_id', $explode_speakers)->get()->each(function ($speaker_name) use (&$names){
