@@ -13,11 +13,11 @@ class Location extends Model
      * @var array
      */
     protected $fillable = [
-        'location_id', 'name', 'videoPath', 'videoPathEn', 'chat_id', 'chatWidget_id', 'stream_id'
+        'location_id', 'name'
     ];
     
     /**
-     * Table
+     * Table 
      * @var string
      */
     public $table = 'locations';
@@ -33,4 +33,8 @@ class Location extends Model
         return $this->hasMany(Poll::class, 'location_id', 'location_id');
     }
 
+    public function streams()
+    {
+        return $this->hasMany(Stream::class, 'location_id', 'location_id');
+    }
 }

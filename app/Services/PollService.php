@@ -73,6 +73,12 @@ class PollService
                 throw new InvalidArgumentException('Empty poll results!');
             $polls = [];
 
+            $poll = Poll::find($poll_id);
+            $titlePoll = $poll->name;
+
+            foreach ($poll->answers as $answer)
+                $polls[$answer->answer_title] = 0;//лишь бы работало
+
             foreach ($pollResult as $user_answer) {
                 if($user_answer->answer()->id === 355)
                     continue;
@@ -82,14 +88,14 @@ class PollService
                     $polls[$answer_title] = 0;
                 $polls[$answer_title]++;
             }
-            $titlePoll = Poll::find($poll_id)->name;
+
             $result = [
                 'title' => $titlePoll,
                 'poll' => $polls
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            throw new InvalidArgumentException('Unable get result! '.$e->getMessage());
+            throw new InvalidArgumentException('Unable get result!');
         }
         return $result;
     }
@@ -97,11 +103,17 @@ class PollService
     public function getPoll($poll_id)
     {
         $result = [];
-        $pollsExtraId = [99, 100, 101, 102]; //айди вопросов 10, 11, 12, 13
+        $pollExtraId = 102; //айди вопросов 10, 11, 12, 13  =>  99, 100, 101, 102
         try {
-            if (in_array($poll_id, $pollsExtraId)) {
-                $result['data']['before'] = $this->getPollResult((int) $poll_id - 89);//хардкодим, зато надежно
-                $result['data']['after'] = $this->getPollResult((int) $poll_id);
+            if ((int) $poll_id === $pollExtraId) {
+                $result['data'][0]['before'] = $this->getPollResult((int) 10);//хардкодим, зато надежно
+                $result['data'][0]['after'] = $this->getPollResult((int) 99);
+                $result['data'][1]['before'] = $this->getPollResult((int) 11);//хардкодим, зато надежно
+                $result['data'][1]['after'] = $this->getPollResult((int) 100);
+                $result['data'][2]['before'] = $this->getPollResult((int) 12);//хардкодим, зато надежно
+                $result['data'][2]['after'] = $this->getPollResult((int) 101);
+                $result['data'][3]['before'] = $this->getPollResult((int) 13);//хардкодим, зато надежно
+                $result['data'][3]['after'] = $this->getPollResult((int) 102);
                 $result['status'] = 'success';
             } else if ($this->pollRepository->isQuiz((int) $poll_id)) {
                 $result['data']['winnersCount'] = $this->pollRepository->countCorrectUserAnswers((int) $poll_id);
@@ -141,27 +153,16 @@ class PollService
         try {
             $result = [];
             $scoreRepository = new ScoreRepository(new Action());
-            $pollsExtraId = [99, 100, 101, 102]; //айди вопросов 10, 11, 12, 13
 
             if(isset($data['answer_text']) && !empty($data['answer_text']))
                 $pollAnswerUser = $this->pollRepository->storeUserAnswerOpen($data);
             else
                 $pollAnswerUser = $this->pollRepository->storeUserAnswer($data);
 
-            if (in_array($data['poll_id'], $pollsExtraId)) {
-                $result['data']['before'] = $this->getPollResult((int) $pollAnswerUser->poll_id - 89);//хардкодим, зато надежно
-                $result['data']['after'] = $this->getPollResult((int) $pollAnswerUser->poll_id);
-                $result['message'] = 'Thank you!';
-
-                //green balls
-                $scoreRepository->storeActivity([
-                    'title' => 'poll',
-                    'attendee_id' => auth()->user()->attendee_id
-                ]);
-            } else if ($this->pollRepository->isQuiz((int) $pollAnswerUser->poll_id)) {
+            if ($this->pollRepository->isQuiz((int) $pollAnswerUser->poll_id)) {
                 $result['data']['winnersCount'] = $this->pollRepository->countCorrectUserAnswers((int) $pollAnswerUser->poll_id);
                 $result['data']['id'] = (int) $pollAnswerUser->poll_id;
-                $result['status'] = 'success';//(bool) $pollAnswerUser->answer()->true_answer ? 'Correct' : 'Wrong';
+                $result['status'] = 'success';
                 //green balls
                 $scoreRepository->storeActivity([
                     'title' => 'quiz',
@@ -207,7 +208,7 @@ class PollService
     {
         try {
             $validate = Validator::make($data, [
-                'stream_id' => 'required|exists:locations,stream_id',
+                'stream_id' => 'required|exists:streams,id',
                 'rating' => 'required|numeric',
                 'text' => 'min:2|max:255'
             ]);

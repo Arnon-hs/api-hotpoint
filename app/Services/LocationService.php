@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Location;
 use App\Repositories\LocationRepository;
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
 class LocationService
