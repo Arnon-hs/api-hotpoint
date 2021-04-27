@@ -216,6 +216,12 @@ class PollService
                 throw new InvalidArgumentException($validate->errors());
 
             $evaluation = $this->pollRepository->storeUserEvaluation($data);
+
+            $scoreRepository = new ScoreRepository(new Action());
+            $scoreRepository->storeActivity([
+                'title' => 'appraisal',
+                'attendee_id' => auth()->user()->attendee_id
+            ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable store evaluation, ' . $e->getMessage());

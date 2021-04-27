@@ -100,9 +100,12 @@ class AuthController extends Controller
      */
     public function me()
     {
-        $user = auth()->user()->toArray();
+        $user = auth()->user()->makeVisible('password');
+        $nick = 'User ' . substr(preg_replace('%[^A-Za-z0-9]%', null, $user->password), -5);
+        $user = $user->makeHidden('password')->toArray();
         $auth = $this->clientService->getAuthHCC($user);
-        return response()->json(array_merge($user, compact('auth')));
+
+        return response()->json(array_merge($user, compact('auth', 'nick')));
     }
 
     /**

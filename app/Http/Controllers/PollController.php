@@ -73,7 +73,7 @@ class PollController extends Controller
      */
     public function storeUserEvaluation(Request $request)
     {
-        try { //todo
+        try {
             $data = $request->only(['stream_id', 'text', 'rating']);
 
             if($this->pollService->storeUserEvaluation($data)) {
