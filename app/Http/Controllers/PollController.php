@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use Illuminate\Http\Request;
-use App\Models\Poll;
 use App\Services\PollService;
 
 class PollController extends Controller
@@ -23,25 +22,27 @@ class PollController extends Controller
 
     public function index()
     {
-        $polls = $this->pollService->allPolls();
         $locations = Location::all();
-
-        return view('rooms', compact('polls', 'locations'));
+        return view('rooms', compact('locations'));
     }
 
     /**
-     * TODO formatted
+     * Get all polls
      * @return \Illuminate\Http\JsonResponse
      */
-    public function all()//TODO Pattern Repository!!!
+    public function all()
     {
-        $result = Poll::all();
+        try {
+            $result = $this->pollService->allPolls();
+            $res['data'] = $result;
+            $res['status'] = 200;
+        } catch (\Exception $e) {
+            $res = [
+                'data' => $e->getMessage(),
+                'status' => 500
+            ];
+        }
 
-        foreach ($result as $answer)
-           $answer->answers;
-
-        $res['data'] = $result;
-        $res['status'] = 200;
         return response()->json($res['data'], $res['status']);
     }
 
@@ -52,7 +53,7 @@ class PollController extends Controller
     public function storeUserAnswer(Request $request)
     {
         try {
-            $data = $request->only(['poll_id', 'answer_id', 'time']);
+            $data = $request->only(['poll_id', 'answer_id', 'answer_text']);
             $result = $this->pollService->storeUserAnswer($data);
 
             $result['data'] = $result;
@@ -101,7 +102,7 @@ class PollController extends Controller
     public function getPollResult($poll_id)
     {
         try {
-            $pollResult['data'] = $this->pollService->getPollResult($poll_id);// test
+            $pollResult['data'] = $this->pollService->getPoll($poll_id);// test
             $pollResult['status'] = 200;
         } catch (\Exception $e) {
             $pollResult = [
@@ -110,33 +111,5 @@ class PollController extends Controller
             ];
         }
         return response()->json($pollResult['data'], $pollResult['status']);
-    }
-
-    public function getPollResultBefore($poll_id)
-    {
-        try {
-            $pollResultBefore['data'] = $this->pollService->getPollResultBefore($poll_id);
-            $pollResultBefore['status'] = 200;
-        } catch (\Exception $e) {
-            $pollResultBefore = [
-                'data' => $e->getMessage(),
-                'status' => 500
-            ];
-        }
-        return response()->json($pollResultBefore['data'], $pollResultBefore['status']);
-    }
-
-    public function getPollResultAfter($poll_id)
-    {
-        try {
-            $pollResultAfter['data'] = $this->pollService->getPollResultAfter($poll_id);
-            $pollResultAfter['status'] = 200;
-        } catch (\Exception $e) {
-            $pollResultAfter = [
-                'data' => $e->getMessage(),
-                'status' => 500
-            ];
-        }
-        return response()->json($pollResultAfter['data'], $pollResultAfter['status']);
     }
 }
