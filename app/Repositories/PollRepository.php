@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Models\Location;
 use App\Models\Poll;
 use App\Models\PollResult;
+use App\Models\Stream;
 use App\Models\UserAnswer;
 
 class PollRepository
@@ -66,7 +67,8 @@ class PollRepository
     public function storeUserEvaluation($data)
     {
         try {
-            $location_name = Location::where('stream_id', $data['stream_id'])->get()->first()->name;
+            $location_name = Stream::where('id', $data['stream_id'])->get()->first()->location()->name;
+            dd($location_name);
             $user = auth()->user();
 
             $client = new \Google_Client();
