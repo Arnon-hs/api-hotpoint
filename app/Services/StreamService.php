@@ -48,7 +48,7 @@ class StreamService
     {
         try {
             $stream = $this->streamRepository->getStreamById($stream_id);
-            $timemarks = $stream->location()->sessions()->whereNotNull('timemark')->pluck('name', 'timemark')->toArray();
+            $timemarks = $stream->location()->sessions()->where('sessiondate', $stream->date)->whereNotNull('timemark')->pluck('name', 'timemark')->toArray();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new InvalidArgumentException('Unable get time marks!');
