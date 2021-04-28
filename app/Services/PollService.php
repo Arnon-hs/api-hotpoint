@@ -95,7 +95,7 @@ class PollService
             ];
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            throw new InvalidArgumentException('Unable get result!');
+            throw new InvalidArgumentException('Unable get result!'. $e->getMessage());
         }
         return $result;
     }
@@ -109,7 +109,7 @@ class PollService
                 $result['data'][0]['before'] = $this->getPollResult((int) 10);//хардкодим, зато надежно
                 $result['data'][0]['after'] = $this->getPollResult((int) 99);
                 $result['data'][1]['before'] = $this->getPollResult((int) 11);//хардкодим, зато надежно
-                $result['data'][1]['after'] = $this->getPollResult((int) 100);
+                $result['data'][1]['after'] = $this->getPollResult((int) 103);//100 раньше было
                 $result['data'][2]['before'] = $this->getPollResult((int) 12);//хардкодим, зато надежно
                 $result['data'][2]['after'] = $this->getPollResult((int) 101);
                 $result['data'][3]['before'] = $this->getPollResult((int) 13);//хардкодим, зато надежно

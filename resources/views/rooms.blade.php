@@ -25,7 +25,7 @@
             <div class="tab-pane fade show {{$key === 0 ?'active':''}}" id="nav-{{$location->location_id}}" role="tabpanel" aria-labelledby="nav-{{$location->location_id}}-tab">
                 @foreach($location->polls as $poll_key => $poll)
                     <div class="col-md-12 m-3 text-center">
-                        @if(in_array($poll->id, [99, 100, 101, 102]))
+                        @if(in_array($poll->id, [99, 103, 101, 102]))
                             <a href="https://live.proofix.tv/shnaider/interactive-control.php?event=shnaider&id_room={{$key+1}}&setstatus={{$poll->id}}" class="btn btn-primary btn-lg">ПОСЛЕ {{$poll->name}}</a>
                         @elseif(in_array($poll->id, [10, 11, 12, 13]))
                             <a href="https://live.proofix.tv/shnaider/interactive-control.php?event=shnaider&id_room={{$key+1}}&setstatus={{$poll->id}}" class="btn btn-primary btn-lg">ДО {{$poll->name}}</a>

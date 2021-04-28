@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\GetSessionList::class,
         \App\Console\Commands\GetSpeakers::class,
         \App\Console\Commands\GetSessionPersonalList::class,
-        \App\Console\Commands\DischargeMeetings::class
+        \App\Console\Commands\DischargeMeetings::class,
+        \App\Console\Commands\GenerateStat::class
     ];
 
     /**
